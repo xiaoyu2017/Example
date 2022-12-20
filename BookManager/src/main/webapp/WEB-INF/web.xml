@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+
+    <!--类别接口-start-->
+    <servlet>
+        <servlet-name>category-get-all</servlet-name>
+        <servlet-class>cn.fishland.bookmanager.controller.CategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>category-get-all</servlet-name>
+        <url-pattern>/category/*</url-pattern>
+    </servlet-mapping>
+    <!--类别接口-end-->
+
+    <!--home-start-->
+    <servlet>
+        <servlet-name>homeServlet</servlet-name>
+        <servlet-class>cn.fishland.bookmanager.controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homeServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!--home-end-->
+
+    <!--拦截所有视图请求-默认视图都是以view开头-start-->
+    <servlet>
+        <servlet-name>views</servlet-name>
+        <servlet-class>cn.fishland.bookmanager.controller.ViewsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>views</servlet-name>
+        <url-pattern>/view/*</url-pattern>
+    </servlet-mapping>
+    <!--拦截所有视图请求-默认视图都是以view开头-end-->
+</web-app>

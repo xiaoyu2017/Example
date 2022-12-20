@@ -1,0 +1,374 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.88.1">
+  <title>菜单管理-test</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../../../static/lib/bootstrap-5.1.3/css/bootstrap.css" rel="stylesheet">
+  <link href="./../static/lib/bootstrap-table-1.21.1/css/bootstrap-table.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../../../static/css/dashboard.css" rel="stylesheet">
+  <!--    <link href="./static/css/headers.css" rel="stylesheet">-->
+
+  <style>
+    td {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#" style="text-align: center;">图书管理</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+          aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="搜索..." aria-label="Search">
+  <div class="navbar-nav">
+    <div class="nav-item text-nowrap">
+      <a class="nav-link px-3" href="#">登出</a>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="#">
+              <span data-feather="home"></span>
+              网站详情
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="book"></span>
+              图书管理
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="user"></span>
+              个人信息
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="layers"></span>
+              分类管理
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="menu"></span>
+              菜单管理
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="users"></span>
+              角色管理
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="settings"></span>
+              系统管理
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">菜单管理</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              添加
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <form class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+          <label class="visually-hidden" for="name">书名</label>
+          <input type="text" class="form-control" id="name" placeholder="书名">
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="author">作者</label>
+          <input type="text" class="form-control" id="author" placeholder="作者">
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="publisher">出版社</label>
+          <input type="text" class="form-control" id="publisher" placeholder="出版社">
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="isbn">ISBN</label>
+          <input type="text" class="form-control" id="isbn" placeholder="ISBN">
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="inlineFormSelectPref">类别</label>
+          <div class="input-group">
+            <div class="input-group-text">类别</div>
+            <select class="form-select" id="inlineFormSelectPref">
+              <option selected>选择...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="format">格式</label>
+          <div class="input-group">
+            <div class="input-group-text">格式</div>
+            <select class="form-select" id="format">
+              <option selected>选择...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="language">语言</label>
+          <div class="input-group">
+            <div class="input-group-text">语言</div>
+            <select class="form-select" id="language">
+              <option selected>选择...</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="createDateStart">创建时间start</label>
+          <label class="visually-hidden" for="createDateEnd">创建时间end</label>
+          <div class="input-group">
+            <div class="input-group-text">创建时间</div>
+            <input type="text" class="form-control" id="createDateStart" placeholder="书名">
+            <div class="input-group-text">-</div>
+            <input type="text" class="form-control" id="createDateEnd" placeholder="书名">
+          </div>
+        </div>
+        <div class="col-12">
+          <label class="visually-hidden" for="updateDateStart">修改时间start</label>
+          <label class="visually-hidden" for="updateDateEnd">修改时间end</label>
+          <div class="input-group">
+            <div class="input-group-text">修改时间</div>
+            <input type="text" class="form-control" id="updateDateStart" placeholder="书名">
+            <div class="input-group-text">-</div>
+            <input type="text" class="form-control" id="updateDateEnd" placeholder="书名">
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">查询</button>
+        </div>
+      </form>
+
+      <div class="table-responsive" style="margin-top: 30px;">
+        <table class="table table-hover table-bordered" style="table-layout: fixed;">
+          <thead class="thead-dark">
+          <tr>
+            <th scope="col" style="width: 80px;">ID</th>
+            <th scope="col" >书名</th>
+            <th scope="col" >出版社</th>
+            <th scope="col" style="width: 150px;">作者</th>
+            <th scope="col" style="width: 150px;">ISBN</th>
+            <th scope="col" style="width: 80px;">时间</th>
+            <th scope="col" style="width: 80px;">语言</th>
+            <th scope="col" style="width: 80px;">大小</th>
+            <th scope="col" style="width: 80px;">格式</th>
+            <th scope="col" style="width: 110px;">操作</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr onclick="show()">
+            <td>1</td>
+            <td>random</td>
+            <td>random</td>
+            <td>9787536692930</td>
+            <td>random</td>
+            <td>2022</td>
+            <td>Chinese</td>
+            <td>146.43</td>
+            <td>text</td>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-success">修改</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>1,002</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-success">修改</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>1,003</td>
+            <td>data</td>
+            <td>rich</td>
+            <td>dashboard</td>
+            <td>tabular</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+            <td>
+              <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                <button type="button" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-success">修改</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>1,003</td>
+            <td>information</td>
+            <td>placeholder</td>
+            <td>illustrative</td>
+            <td>data</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,004</td>
+            <td>text</td>
+            <td>random</td>
+            <td>layout</td>
+            <td>dashboard</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,005</td>
+            <td>dashboarddashboarddashboarddashboarddashboarddashboarddashboarddashboard</td>
+            <td>irrelevant</td>
+            <td>text</td>
+            <td>placeholder</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,006</td>
+            <td>dashboard</td>
+            <td>illustrative</td>
+            <td>rich</td>
+            <td>data</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,007</td>
+            <td>placeholder</td>
+            <td>tabular</td>
+            <td>information</td>
+            <td>irrelevant</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,008</td>
+            <td>random</td>
+            <td>data</td>
+            <td>placeholder</td>
+            <td>text</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          <tr>
+            <td>1,009</td>
+            <td>placeholder</td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+            <td>placeholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholderplaceholder
+            </td>
+            <td>irrelevant</td>
+            <td>visual</td>
+            <td>layout</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col align-self-start">
+            显示第<span></span>行到第<span></span>行记录，总共<span></span>行<span></span>页记录。
+          </div>
+          <div class="col align-self-end">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-end">
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="../../../static/lib/jquery/jquery-3.6.1.min.js"></script>
+<script src="../../../static/lib/bootstrap-5.1.3/js/bootstrap.bundle.js"></script>
+<script>
+
+  $(function () {
+
+  });
+
+</script>
+</body>
+</html>
+
