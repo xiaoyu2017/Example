@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fishland.bookmanager.mapper.MenuMapper">
+
+    <insert id="insert" parameterType="Menu">
+        insert into menu(`name`, `icon`, `link`, `parent`, `sort`, `status`)
+            value (#{name}, #{icon}, #{link}, #{parent}, #{sort}, #{status});
+    </insert>
+    <update id="update" parameterType="Menu">
+        update menu
+        set name = #{name}
+        where id = #{id};
+    </update>
+    <delete id="delete" parameterType="Menu">
+        delete
+        from menu
+        where id = #{id};
+    </delete>
+    <select id="selectAll" resultType="Menu">
+        select *
+        from menu;
+    </select>
+</mapper>

@@ -36,10 +36,17 @@ public class ViewsServlet extends HttpServlet {
             case "user":
                 user(req, resp);
                 break;
+            case "login":
+                login(req, resp);
+                break;
             default:
         }
 
         req.getRequestDispatcher("/WEB-INF/views/page/" + view + ".jsp").forward(req, resp);
+    }
+
+    private void login(HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println("登录界面的预处理...");
     }
 
     private void user(HttpServletRequest req, HttpServletResponse resp) {

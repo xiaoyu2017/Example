@@ -47,4 +47,35 @@
         <url-pattern>/view/*</url-pattern>
     </servlet-mapping>
     <!--拦截所有视图请求-默认视图都是以view开头-end-->
+
+    <!--验证码-start-->
+    <servlet>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <servlet-class>cn.fishland.bookmanager.controller.KaptchaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>KaptchaServlet</servlet-name>
+        <url-pattern>/api/kaptcha</url-pattern>
+    </servlet-mapping>
+    <!--验证码-end-->
+
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>cn.fishland.bookmanager.controller.UserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/api/user/*</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>authorFilter</filter-name>
+        <filter-class>cn.fishland.bookmanager.filter.AuthorFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>authorFilter</filter-name>
+        <servlet-name>category-get-all</servlet-name>
+        <servlet-name>homeServlet</servlet-name>
+        <servlet-name>views</servlet-name>
+    </filter-mapping>
 </web-app>

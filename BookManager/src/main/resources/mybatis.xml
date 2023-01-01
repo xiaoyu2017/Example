@@ -3,7 +3,7 @@
 <configuration>
     <!--自定义别名-->
     <typeAliases>
-        <package name="com.filand.bookmanager.bean"/>
+        <package name="cn.fishland.bookmanager.bean"/>
     </typeAliases>
 
     <!--数据源环境-->
@@ -18,22 +18,13 @@
                 <property name="password" value="root"/>
             </dataSource>
         </environment>
-
-        <environment id="test">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url"
-                          value="jdbc:mysql://localhost:33060/BookManager?useUnicode=truecharacterEncoding=utf-8&amp;useSSL=true&amp;serverTimezone=UTC"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
-            </dataSource>
-        </environment>
     </environments>
 
 
     <!--加载映射文件-->
     <mappers>
+        <!--mapper xml-->
+        <mapper resource="cn/fishland/bookmanager/mapper/CategoryMapper.xml"/>
         <package name="cn.fishland.bookmanager.mapper"/>
     </mappers>
 

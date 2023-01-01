@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fishland.bookmanager.mapper.UserMapper">
+
+    <!--解决类字段和表列不相同问题<resultMap>-->
+    <resultMap id="userResult" type="User">
+        <result property="companyName" column="company_name"/>
+        <result property="nickName" column="nick_name"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="userResult">
+        select *
+        from user;
+    </select>
+
+    <!--解决类字段和表列不相同问题<别名加代码片段（只用别名s也可以）>-->
+    <sql id="userSql">
+        id, createTime, updateTime, status, sort, nick_name as nickName, name, password, icon, email,
+company_name as companyName, sex, birthday, code, role
+    </sql>
+    <!--处理类字段和表列不相同问题<resultMap>-->
+    <select id="selectById" resultType="User">
+        select
+        <include refid="userSql"/>
+        from user
+        where id = #{id}
+        and status = 1;
+    </select>
+    <select id="selectByCompanyAndSex" resultType="cn.fishland.bookmanager.bean.pojo.User">
+        select *
+        from user
+        where company_name like #{companyName}
+          and sex = #{sex};
+    </select>
+
+
+    <select id="selectByNameAndPassword" resultMap="userResult">
+        select *
+        from user
+        where name = #{name}
+          and password = #{password}
+          and status = 1;
+    </select>
+</mapper>
