@@ -107,6 +107,10 @@ public class WebTool {
         return sqlSession.getMapper(clazz);
     }
 
+    public static SqlSession sqlSession() {
+        return sqlSessionFactory.openSession();
+    }
+
     public static boolean letGo(String path) {
         return LOGIN_VIEW.equalsIgnoreCase(path.trim()) || LOGIN_API.equalsIgnoreCase(path.trim());
     }

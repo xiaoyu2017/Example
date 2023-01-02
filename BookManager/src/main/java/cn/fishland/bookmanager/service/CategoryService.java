@@ -32,4 +32,5 @@ public interface CategoryService {
      */
     long count();
 
+    Category findById(String id);
 }

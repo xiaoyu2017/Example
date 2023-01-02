@@ -28,7 +28,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="${pageContext.request.contextPath}/view/category">
                     <span data-feather="layers"></span>
                     类别管理
                 </a>

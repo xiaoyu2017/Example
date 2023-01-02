@@ -193,6 +193,22 @@
 
     function showUpdateModel() {
         $('#menuModelTitle').text('修改类别');
+        $.ajax({
+            url: "${pageContext.request.contextPath}/api/category/get",
+            data: {
+                id: id
+            },
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data.error === 0) {
+                    $(window).attr('location', data.to);
+                } else {
+                    console.log(data)
+                }
+            }
+        });
         myModal.show();
     }
 
@@ -224,7 +240,7 @@
     // 新增类别
     function add() {
         $.ajax({
-            url: "${pageContext.request.contextPath}/category/add",
+            url: "${pageContext.request.contextPath}/api/category/add",
             data: $("#categoryForm").serialize(),
             type: "POST",
             dataType: "json",

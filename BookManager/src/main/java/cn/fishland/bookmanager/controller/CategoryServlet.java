@@ -22,40 +22,33 @@ import java.io.IOException;
 public class CategoryServlet extends HttpServlet {
     private static final long serialVersionUID = -7784350673473467125L;
 
-    private CategoryService categoryService = new CategoryServiceImpl();
+    private final CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 第一次请求类别管理页面
-        String[] urlPaths = WebTool.parseUrlPath2Array(req.getContextPath());
-
-        if (urlPaths == null) {
-            // 表示请求类别管理页面相关信息请求
-
-
-            return;
-        }
-
-        switch (urlPaths[0]) {
-            case "page":
-                System.out.println("page");
-                break;
-            case "page1":
-                System.out.println("page1");
-                break;
-            case "page2":
-                System.out.println("√2");
+        String[] pathArray = WebTool.parseUrlPath2Array(req.getRequestURI());
+        switch (pathArray[pathArray.length - 1]) {
+            case "get":
+                get(req, resp);
                 break;
             default:
         }
 
     }
 
+    private void get(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            Category category = categoryService.findById(req.getParameter("id"));
+            ReturnData returnData = new ReturnData("OK", category, req.getContextPath() + "/view/category");
+            resp.getWriter().println(JSON.toJSONString(returnData));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
-        resp.setCharacterEncoding("UTF-8");
-
         String[] pathArray = WebTool.parseUrlPath2Array(req.getRequestURI());
         if (pathArray == null) {
             System.out.println("无法获得类别数据操作请求uir");

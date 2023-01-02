@@ -7,3 +7,12 @@
 ![](https://img.shields.io/badge/fastjson2-2.0.21.graal-blue)
 ![](https://img.shields.io/badge/mybatis-3.5.11-blue)
 ![](https://img.shields.io/badge/mysql-8.0.27-blue)
+
+
+# Mybatis
+
+## 1. 直接使用mapper操作数据库
+[CategoryMapper.xml](/src/main/resources/cn/fishland/bookmanager/mapper/CategoryMapper.xml)
+
+在核心配置文件中引入。
+

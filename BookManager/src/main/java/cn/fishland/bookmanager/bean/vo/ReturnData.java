@@ -12,6 +12,11 @@ import java.util.Date;
  */
 @Data
 public class ReturnData {
+
+    public ReturnData(String message, Object data, String to) {
+        this("200", 0, message, data, to);
+    }
+
     public ReturnData(String message) {
         this("200", 0, message, null, "");
     }

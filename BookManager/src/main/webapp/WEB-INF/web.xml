@@ -16,13 +16,12 @@
 
     <!--类别接口-start-->
     <servlet>
-        <servlet-name>category-get-all</servlet-name>
+        <servlet-name>categoryServlet</servlet-name>
         <servlet-class>cn.fishland.bookmanager.controller.CategoryServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>category-get-all</servlet-name>
-        <url-pattern>/category/*</url-pattern>
+        <servlet-name>categoryServlet</servlet-name>
+        <url-pattern>/api/category/*</url-pattern>
     </servlet-mapping>
     <!--类别接口-end-->
 
@@ -68,14 +67,14 @@
         <url-pattern>/api/user/*</url-pattern>
     </servlet-mapping>
 
-    <filter>
+    <!--<filter>
         <filter-name>authorFilter</filter-name>
         <filter-class>cn.fishland.bookmanager.filter.AuthorFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>authorFilter</filter-name>
-        <servlet-name>category-get-all</servlet-name>
+        <servlet-name>categoryServlet</servlet-name>
         <servlet-name>homeServlet</servlet-name>
         <servlet-name>views</servlet-name>
-    </filter-mapping>
+    </filter-mapping>-->
 </web-app>
