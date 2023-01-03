@@ -11,8 +11,12 @@
 
 # Mybatis
 
-## 1. 直接使用mapper操作数据库
+## 1. 类别相关操作
+
+> 直接使用mapper操作数据库，不通过mapper接口来实现。
+
+1. mapper配置文件
 [CategoryMapper.xml](/src/main/resources/cn/fishland/bookmanager/mapper/CategoryMapper.xml)
 
-在核心配置文件中引入。
-
+2. 核心配置文件添加。
+3. CategoryService调用

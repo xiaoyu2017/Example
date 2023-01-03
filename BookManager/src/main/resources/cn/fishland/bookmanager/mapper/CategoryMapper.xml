@@ -2,30 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="categoryMapper">
-    <insert id="add" parameterType="cn.fishland.bookmanager.bean.pojo.Category">
-        insert into category(`name`, `sort`, `status`) value (#{name}, #{sort}, #{status});
+    <!--批量新增-新增成功后返回id到参数中-参数必须是list集合-->
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into category ( sort, status, name) values
+        <foreach collection="list" item="category" separator=",">
+            (#{category.sort}, #{category.status}, #{category.name})
+        </foreach>
     </insert>
 
-    <select id="findByCategory" resultType="Category">
-        select * from category
-        <trim prefix="where" suffixOverrides="and|or">
-            <if test="name!=null and name!=''">
-                `name` = #{name} and
-            </if>
-            <if test="status!=null">
-                `status` = #{status} or
-            </if>
-        </trim>
-    </select>
-
-    <delete id="deleteAll">
+    <!--批量删除-参数必须是数组-->
+    <delete id="removeById">
         delete from category where id in
-        <foreach collection="ids" item="id" separator="," open="(" close=")">
+        <foreach collection="array" item="id" open="(" close=")" separator=",">
             #{id}
         </foreach>
     </delete>
 
+    <update id="updateById" parameterType="Category">
+        update category
+        set `sort`   = #{sort},
+            `status` = #{status},
+            `name`   = #{name}
+        where id = #{id}
+    </update>
+
+    <!--查询所有-->
     <select id="findAll" resultType="Category">
+        select *
+        from category
+    </select>
+
+    <!--多条件查询-->
+    <select id="findByParam" parameterType="Category" resultType="Category">
         select * from category
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="status!=null">
+                `status` = #{status} and
+            </if>
+            <if test="name!=null and name!= ''">
+                `name` = #{name} and
+            </if>
+        </trim>
     </select>
 </mapper>

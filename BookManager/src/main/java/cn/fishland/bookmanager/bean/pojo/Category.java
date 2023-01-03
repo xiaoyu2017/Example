@@ -22,4 +22,15 @@ public class Category extends BaseBean {
 
     public String name;
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", sort=" + sort +
+                ", name='" + name + '\'' +
+                "} " + super.toString();
+    }
 }

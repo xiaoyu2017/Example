@@ -22,7 +22,7 @@ public abstract class BaseBean implements Serializable {
 
     public Date updateTime;
 
-    public Boolean status;
+    public Boolean status = true;
 
-    public Integer sort;
+    public Integer sort = 0;
 }
