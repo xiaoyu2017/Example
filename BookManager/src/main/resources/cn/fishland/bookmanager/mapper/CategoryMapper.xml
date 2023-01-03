@@ -42,6 +42,9 @@
             <if test="name!=null and name!= ''">
                 `name` = #{name} and
             </if>
+            <if test="name!=null and name!= ''">
+                `id` = #{id} and
+            </if>
         </trim>
     </select>
 </mapper>

@@ -98,7 +98,7 @@
                     </thead>
                     <tbody>
 
-                    <c:forEach items="${categoryList}" var="category">
+                    <c:forEach items="${categoryPageInfo.list}" var="category">
                         <tr>
                             <td>${category.id}</td>
                             <td>${category.sort}</td>
@@ -107,9 +107,11 @@
                             <td>
                                 <div class="btn-group btn-group-sm" role="group"
                                      aria-label="Basic mixed styles example">
-                                    <button type="button" class="btn btn-danger" onclick="categoryDelete('${category.id}')">删除
+                                    <button type="button" class="btn btn-danger"
+                                            onclick="categoryDelete('${category.id}')">删除
                                     </button>
-                                    <button type="button" class="btn btn-success" onclick="showUpdateModel()">修改</button>
+                                    <button type="button" class="btn btn-success" onclick="showUpdateModel()">修改
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -120,21 +122,26 @@
             </div>
             <div class="row">
                 <div class="col align-self-start">
-                    显示第${startRow}行到第${endRow}行记录，总共${count}行${page}页记录。
+                    显示第${categoryPageInfo.pageNum}页记录，总共${categoryPageInfo.total}行${categoryPageInfo.pages}页记录。
                 </div>
                 <div class="col align-self-end">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end">
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
+                                <a class="page-link" aria-label="Previous"
+                                   href="${pageContext.request.contextPath}/api/category/page/${categoryPageInfo.prePage}">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <c:forEach items="${categoryPageInfo.navigatepageNums}" var="navigatepageNum">
+                                <li class="page-item">
+                                    <a class="page-link"
+                                       href="${pageContext.request.contextPath}/api/category/page/${navigatepageNum}">${navigatepageNum}</a>
+                                </li>
+                            </c:forEach>
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                                <a class="page-link" aria-label="Next"
+                                   href="${pageContext.request.contextPath}/api/category/page/${categoryPageInfo.nextPage}">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>

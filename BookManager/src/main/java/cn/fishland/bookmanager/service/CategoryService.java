@@ -1,6 +1,7 @@
 package cn.fishland.bookmanager.service;
 
 import cn.fishland.bookmanager.bean.pojo.Category;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CategoryService {
 
     boolean save(Category... categories);
 
-    boolean update(Category... categories);
+    boolean update(Category categories);
 
     boolean delete(Category... categories);
 
@@ -24,13 +25,8 @@ public interface CategoryService {
      * @param num 每页显示数，默认10
      * @return List<Category>
      */
-    List<Category> find(int page, int num);
+    PageInfo<Category> findAll(int page, int num);
 
-    /**
-     * 统计数量
-     * @return 所有数量（包括无效的）
-     */
-    long count();
 
-    Category findById(String id);
+    PageInfo<Category> findByParam(Category category);
 }

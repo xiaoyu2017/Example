@@ -6,6 +6,8 @@ import cn.fishland.bookmanager.service.CategoryService;
 import cn.fishland.bookmanager.service.impl.CategoryServiceImpl;
 import cn.fishland.bookmanager.tool.WebTool;
 import com.alibaba.fastjson2.JSON;
+import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +21,7 @@ import java.io.IOException;
  * @author xiaoyu
  * @version 1.0
  */
+@Slf4j
 public class CategoryServlet extends HttpServlet {
     private static final long serialVersionUID = -7784350673473467125L;
 
@@ -27,19 +30,43 @@ public class CategoryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 第一次请求类别管理页面
-        String[] pathArray = WebTool.parseUrlPath2Array(req.getRequestURI());
-        switch (pathArray[pathArray.length - 1]) {
+        String requestUri = req.getRequestURI();
+        String[] pathArray = WebTool.handlerMapping(requestUri, "category");
+        if (pathArray == null) {
+            log.debug(String.format("category servlet get handler mapping error uri=[%s]", requestUri));
+            return;
+        }
+
+        switch (pathArray[0]) {
             case "get":
                 get(req, resp);
                 break;
+            case "page":
+                page(req, resp, pathArray[1]);
+                break;
             default:
         }
+    }
 
+    private void page(HttpServletRequest req, HttpServletResponse resp, String s) {
+        int page = Integer.parseInt(s);
+        if (page < 0) {
+            log.debug("category page number < 0");
+            return;
+        }
+        req.setAttribute("categoryPageInfo", categoryService.findAll(page, 10));
+        try {
+            req.getRequestDispatcher("/WEB-INF/views/page/category.jsp").forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void get(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            Category category = categoryService.findById(req.getParameter("id"));
+            Category category1 = new Category();
+            category1.setId(Long.valueOf(req.getParameter("id")));
+            PageInfo<Category> category = categoryService.findByParam(category1);
             ReturnData returnData = new ReturnData("OK", category, req.getContextPath() + "/view/category");
             resp.getWriter().println(JSON.toJSONString(returnData));
         } catch (IOException e) {

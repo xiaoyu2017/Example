@@ -31,7 +31,7 @@ public class AuthorFilter implements Filter {
         resp.setContentType("text/html;charset=UTF-8");
 
         // 是否为放行url
-        if (WebTool.letGo(req.getRequestURI())) {
+        /*if (WebTool.letGo(req.getRequestURI())) {
             filterChain.doFilter(req, resp);
             return;
         }
@@ -40,7 +40,7 @@ public class AuthorFilter implements Filter {
         if (noPermission(req)) {
             resp.sendRedirect(WebTool.LOGIN_VIEW);
             return;
-        }
+        }*/
 
         filterChain.doFilter(req, resp);
     }

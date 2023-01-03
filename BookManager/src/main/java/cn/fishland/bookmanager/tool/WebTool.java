@@ -2,6 +2,7 @@ package cn.fishland.bookmanager.tool;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -21,6 +22,7 @@ import java.util.Properties;
  * @author xiaoyu
  * @version 1.0
  */
+@Slf4j
 public class WebTool {
 
     public static String LOGIN_VIEW = "/BookManager/view/login";
@@ -71,6 +73,26 @@ public class WebTool {
         }
         System.arraycopy(strings, flag, strings, 0, strings.length - 1);
         return strings;
+    }
+
+    public static String[] handlerMapping(String path, String servletFlag) {
+        String[] strings = parseUrlPath2Array(path);
+        int flag = 0;
+        if (strings != null && strings.length > 0) {
+            if (strings[2].equals(servletFlag)) {
+                flag = 3;
+            } else if (strings[0].equals("BookManager")) {
+                flag = 1;
+            } else if (strings[1].equals("api") || strings[1].equals("view")) {
+                flag = 2;
+            }
+            String[] mappers = new String[strings.length - flag];
+            System.arraycopy(strings, flag, mappers, 0, strings.length - flag);
+            return mappers;
+        } else {
+            log.debug("get request handler mapping error...");
+            return null;
+        }
     }
 
     /**
