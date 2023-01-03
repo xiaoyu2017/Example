@@ -6,6 +6,26 @@
         insert into category(`name`, `sort`, `status`) value (#{name}, #{sort}, #{status});
     </insert>
 
-    <update id="updateCategory" parameterType="cn.fishland.bookmanager.bean.pojo.Category">
-    </update>
+    <select id="findByCategory" resultType="Category">
+        select * from category
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="name!=null and name!=''">
+                `name` = #{name} and
+            </if>
+            <if test="status!=null">
+                `status` = #{status} or
+            </if>
+        </trim>
+    </select>
+
+    <delete id="deleteAll">
+        delete from category where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findAll" resultType="Category">
+        select * from category
+    </select>
 </mapper>

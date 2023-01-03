@@ -1,31 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <!--自定义别名-->
+    <!--
+        引入外部配置文件：
+            resource：被引用文件名称
+    -->
+    <properties resource="jdbc.properties"/>
+
+    <!--mybatis的全局配置信息-->
+    <settings>
+        <!--是否开启驼峰命名自动映射（默认关闭）-->
+        <!--<setting name="mapUnderscoreToCamelCase" value="true"/>-->
+
+        <!--是否开启懒加载（开启懒加载要确保aggressiveLazyLoading属性为false）-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+
+    <!--
+        类型别名，不需要直接使用全类名，
+        别名不区分大小写
+    -->
     <typeAliases>
+        <!--
+            单独设置单个别名:
+                type:需要设置的类
+                alias：可不写，不写默认为类名
+        -->
+        <!--<typeAlias type="cn.fishland.bookmanager.bean.pojo.Ebook" alias="Ebook"/>-->
+        <!--设置包下所有别名-->
         <package name="cn.fishland.bookmanager.bean"/>
     </typeAliases>
 
-    <!--数据源环境-->
+    <!--添加插件-->
+    <plugins>
+        <!--分页插件-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+    </plugins>
+
+    <!--
+        配置数据源：
+            default：使用的环境
+    -->
     <environments default="developement">
+        <!--
+            单独数据源配置：
+                id：数据源唯一标识
+        -->
         <environment id="developement">
+            <!--设置事务类型，JDBC表示后当前数据库-->
             <transactionManager type="JDBC"/>
+            <!--
+                dataSource：表示数据源设置
+                    type：表示数据源类型，是否使用连接池
+                        POOLED：使用连接池
+                        UNPOOLED：表示不使用连接池
+                        JNDI：使用上下文数据源
+            -->
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url"
-                          value="jdbc:mysql://localhost:33060/BookManager?useUnicode=truecharacterEncoding=utf-8&amp;useSSL=true&amp;serverTimezone=UTC"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
+                <!--
+                    property：数据源相关配置
+                        name：名称
+                        value：值
+                -->
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
             </dataSource>
         </environment>
     </environments>
-
 
     <!--加载映射文件-->
     <mappers>
         <!--mapper xml-->
         <mapper resource="cn/fishland/bookmanager/mapper/CategoryMapper.xml"/>
+        <!--
+            mapper interface class：以下条件为必须条件
+                1. 需要mapper和接口目录结构相同，全类名相同
+                2. mapper和接口类相同
+        -->
         <package name="cn.fishland.bookmanager.mapper"/>
     </mappers>
-
 </configuration>
