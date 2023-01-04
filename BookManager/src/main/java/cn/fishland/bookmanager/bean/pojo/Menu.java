@@ -1,6 +1,7 @@
 package cn.fishland.bookmanager.bean.pojo;
 
 import cn.fishland.bookmanager.bean.BaseBean;
+import com.alibaba.fastjson2.JSON;
 
 import java.util.List;
 import java.util.Objects;
@@ -97,5 +98,10 @@ public class Menu extends BaseBean {
                 ", parent=" + parent +
                 ", childs=" + childs +
                 "} " + super.toString();
+    }
+
+    @Override
+    public String toJson() {
+        return JSON.toJSONString(this);
     }
 }

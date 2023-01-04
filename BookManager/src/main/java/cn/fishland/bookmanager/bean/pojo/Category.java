@@ -1,6 +1,7 @@
 package cn.fishland.bookmanager.bean.pojo;
 
 import cn.fishland.bookmanager.bean.BaseBean;
+import com.alibaba.fastjson2.JSON;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,5 +33,10 @@ public class Category extends BaseBean {
                 ", sort=" + sort +
                 ", name='" + name + '\'' +
                 "} " + super.toString();
+    }
+
+    @Override
+    public String toJson() {
+        return JSON.toJSONString(this);
     }
 }

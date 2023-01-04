@@ -1,6 +1,7 @@
 package cn.fishland.bookmanager.service.impl;
 
 import cn.fishland.bookmanager.bean.pojo.Category;
+import cn.fishland.bookmanager.bean.vo.CategoryVo;
 import cn.fishland.bookmanager.service.CategoryService;
 import cn.fishland.bookmanager.tool.WebTool;
 import com.github.pagehelper.PageHelper;
@@ -96,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public PageInfo<Category> findAll(int page, int num) {
+    public PageInfo<Category> findAll(int page, int num, CategoryVo categoryVo) {
         if (page <= 0 || num <= 0) {
             System.out.println("page 或 num 必须大于0");
             return null;
@@ -105,33 +106,7 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             sqlSession = WebTool.sqlSession();
             PageHelper.startPage(page, num);
-            List<Category> list = sqlSession.selectList("categoryMapper.findAll");
-            return new PageInfo<Category>(list, 5);
-        } catch (Exception e) {
-            log.debug(String.format("insert category error=[%s]", e.getMessage()));
-            if (sqlSession != null) {
-                sqlSession.rollback();
-            }
-            return null;
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
-        }
-    }
-
-    @Override
-    public PageInfo<Category> findByParam(Category category) {
-        if (category == null) {
-            System.out.println("page 或 num 必须大于0");
-            return null;
-        }
-
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = WebTool.sqlSession();
-            PageHelper.startPage(1, 15);
-            List<Category> list = sqlSession.selectList("categoryMapper.findByParam", category);
+            List<Category> list = sqlSession.selectList("categoryMapper.findAll", categoryVo);
             return new PageInfo<Category>(list, 5);
         } catch (Exception e) {
             log.debug(String.format("insert category error=[%s]", e.getMessage()));

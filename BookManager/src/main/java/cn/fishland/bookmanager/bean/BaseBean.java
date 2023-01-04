@@ -25,4 +25,6 @@ public abstract class BaseBean implements Serializable {
     public Boolean status = true;
 
     public Integer sort = 0;
+
+    public abstract String toJson();
 }

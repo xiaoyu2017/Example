@@ -1,6 +1,7 @@
 package cn.fishland.bookmanager.bean.pojo;
 
 import cn.fishland.bookmanager.bean.BaseBean;
+import com.alibaba.fastjson2.JSON;
 
 import java.util.List;
 
@@ -48,4 +49,8 @@ public class Ebook extends BaseBean {
     private Integer category;
 
 
+    @Override
+    public String toJson() {
+        return JSON.toJSONString(this);
+    }
 }

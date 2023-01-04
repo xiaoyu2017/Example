@@ -1,6 +1,7 @@
 package cn.fishland.bookmanager.bean.pojo;
 
 import cn.fishland.bookmanager.bean.BaseBean;
+import com.alibaba.fastjson2.JSON;
 
 import java.util.Date;
 import java.util.Objects;
@@ -158,5 +159,10 @@ public class User extends BaseBean {
                 ", code='" + code + '\'' +
                 ", role=" + role +
                 "} " + super.toString();
+    }
+
+    @Override
+    public String toJson() {
+        return JSON.toJSONString(this);
     }
 }

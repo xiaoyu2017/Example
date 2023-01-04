@@ -1,5 +1,6 @@
 package cn.fishland.bookmanager.tool;
 
+import cn.fishland.bookmanager.bean.vo.CategoryVo;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -91,6 +97,36 @@ public class WebTool {
             return mappers;
         } else {
             log.debug("get request handler mapping error...");
+            return null;
+        }
+    }
+
+    public static <T> String toGetUrlParam(T t) {
+        try {
+            StringBuilder stringBuffer = new StringBuilder();
+
+            List<Field> fields = new ArrayList<>();
+            fields.addAll(Arrays.asList(t.getClass().getFields()));
+            fields.addAll(Arrays.asList(t.getClass().getDeclaredFields()));
+
+            for (Field field : fields) {
+                // 忽略访问权限
+                field.setAccessible(true);
+                String fieldName = field.getName();
+                if (!"serialVersionUID".equals(fieldName)) {
+                    stringBuffer.append(fieldName);
+                    stringBuffer.append("=");
+                    Object obj = field.get(t);
+                    if (obj != null) {
+                        stringBuffer.append(URLEncoder.encode(obj + "", "UTF-8"));
+                    }
+                    stringBuffer.append("&");
+                }
+            }
+
+            return String.valueOf(stringBuffer.substring(0, stringBuffer.length() - 1));
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -179,4 +215,5 @@ public class WebTool {
         defaultKaptcha.setConfig(new Config(properties));
         return defaultKaptcha;
     }
+
 }

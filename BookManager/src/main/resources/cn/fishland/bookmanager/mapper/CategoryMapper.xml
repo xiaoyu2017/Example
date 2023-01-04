@@ -3,9 +3,9 @@
 
 <mapper namespace="categoryMapper">
     <!--批量新增-新增成功后返回id到参数中-参数必须是list集合-->
-    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Category">
         insert into category ( sort, status, name) values
-        <foreach collection="list" item="category" separator=",">
+        <foreach collection="array" item="category" separator=",">
             (#{category.sort}, #{category.status}, #{category.name})
         </foreach>
     </insert>
@@ -27,24 +27,27 @@
     </update>
 
     <!--查询所有-->
-    <select id="findAll" resultType="Category">
+    <select id="findAll" resultType="CategoryVo">
         select *
         from category
-    </select>
-
-    <!--多条件查询-->
-    <select id="findByParam" parameterType="Category" resultType="Category">
-        select * from category
         <trim prefix="where" suffixOverrides="and|or">
-            <if test="status!=null">
-                `status` = #{status} and
-            </if>
             <if test="name!=null and name!= ''">
-                `name` = #{name} and
+                `name` like "%"#{name}"%" and
             </if>
-            <if test="name!=null and name!= ''">
-                `id` = #{id} and
+            <if test="createStart!=null">
+                <![CDATA[createTime > #{createStart} and]]>
+            </if>
+            <if test="createEnd!=null">
+                <![CDATA[createTime < #{createEnd} and]]>
+            </if>
+            <if test="createEnd!=null">
+                <![CDATA[updateTime > #{updateStart} and]]>
+            </if>
+            <if test="createEnd!=null">
+                <![CDATA[updateTime < #{updateEnd} and]]>
             </if>
         </trim>
+        order by updateTime DESC
     </select>
+
 </mapper>

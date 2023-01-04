@@ -1,6 +1,7 @@
 package cn.fishland.bookmanager.service;
 
 import cn.fishland.bookmanager.bean.pojo.Category;
+import cn.fishland.bookmanager.bean.vo.CategoryVo;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -21,12 +22,11 @@ public interface CategoryService {
 
     /**
      * 查询指定页数内容
+     *
      * @param page 第几页，开始为1
-     * @param num 每页显示数，默认10
+     * @param num  每页显示数，默认10
      * @return List<Category>
      */
-    PageInfo<Category> findAll(int page, int num);
+    PageInfo<Category> findAll(int page, int num, CategoryVo categoryVo);
 
-
-    PageInfo<Category> findByParam(Category category);
 }

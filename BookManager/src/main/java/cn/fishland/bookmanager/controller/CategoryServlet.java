@@ -1,12 +1,12 @@
 package cn.fishland.bookmanager.controller;
 
 import cn.fishland.bookmanager.bean.pojo.Category;
+import cn.fishland.bookmanager.bean.vo.CategoryVo;
 import cn.fishland.bookmanager.bean.vo.ReturnData;
 import cn.fishland.bookmanager.service.CategoryService;
 import cn.fishland.bookmanager.service.impl.CategoryServiceImpl;
 import cn.fishland.bookmanager.tool.WebTool;
 import com.alibaba.fastjson2.JSON;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 /**
  * 类别相关类请求控制类
@@ -38,9 +39,6 @@ public class CategoryServlet extends HttpServlet {
         }
 
         switch (pathArray[0]) {
-            case "get":
-                get(req, resp);
-                break;
             case "page":
                 page(req, resp, pathArray[1]);
                 break;
@@ -54,7 +52,37 @@ public class CategoryServlet extends HttpServlet {
             log.debug("category page number < 0");
             return;
         }
-        req.setAttribute("categoryPageInfo", categoryService.findAll(page, 10));
+
+        CategoryVo categoryVo = new CategoryVo();
+        String name = req.getParameter("name");
+        if (name != null) {
+            categoryVo.setName(name);
+        }
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String createStart = req.getParameter("createStart");
+            if (!WebTool.isBlank(createStart)) {
+                categoryVo.setCreateStart(dateFormat.parse(createStart));
+            }
+            String createEnd = req.getParameter("createEnd");
+            if (!WebTool.isBlank(createEnd)) {
+                categoryVo.setCreateStart(dateFormat.parse(createEnd));
+            }
+            String updateStart = req.getParameter("updateStart");
+            if (!WebTool.isBlank(updateStart)) {
+                categoryVo.setCreateStart(dateFormat.parse(updateStart));
+            }
+            String updateEnd = req.getParameter("updateEnd");
+            if (!WebTool.isBlank(updateEnd)) {
+                categoryVo.setCreateStart(dateFormat.parse(updateEnd));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        req.setAttribute("categoryPageInfo", categoryService.findAll(page, 10, categoryVo));
+        req.setAttribute("categoryVo", categoryVo);
+        req.setAttribute("searchParam", "?" + WebTool.toGetUrlParam(categoryVo));
         try {
             req.getRequestDispatcher("/WEB-INF/views/page/category.jsp").forward(req, resp);
         } catch (Exception e) {
@@ -62,21 +90,9 @@ public class CategoryServlet extends HttpServlet {
         }
     }
 
-    private void get(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            Category category1 = new Category();
-            category1.setId(Long.valueOf(req.getParameter("id")));
-            PageInfo<Category> category = categoryService.findByParam(category1);
-            ReturnData returnData = new ReturnData("OK", category, req.getContextPath() + "/view/category");
-            resp.getWriter().println(JSON.toJSONString(returnData));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String[] pathArray = WebTool.parseUrlPath2Array(req.getRequestURI());
+        String[] pathArray = WebTool.handlerMapping(req.getRequestURI(), "category");
         if (pathArray == null) {
             System.out.println("无法获得类别数据操作请求uir");
             resp.getWriter().print(JSON.toJSONString(new ReturnData("请求链接无法处理")));
@@ -104,7 +120,7 @@ public class CategoryServlet extends HttpServlet {
         }
 
         ReturnData returnData;
-        switch (pathArray[pathArray.length - 1]) {
+        switch (pathArray[0]) {
             case "add":
                 returnData = categoryAdd(category);
                 break;
