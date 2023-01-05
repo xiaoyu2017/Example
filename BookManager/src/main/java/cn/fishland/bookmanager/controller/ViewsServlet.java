@@ -52,6 +52,7 @@ public class ViewsServlet extends HttpServlet {
 
     private void category(HttpServletRequest req, HttpServletResponse res) {
         categoryService = new CategoryServiceImpl();
+        req.setAttribute("menuActive", "category");
         req.setAttribute("categoryPageInfo", categoryService.findAll(1, 10, null));
     }
 }
