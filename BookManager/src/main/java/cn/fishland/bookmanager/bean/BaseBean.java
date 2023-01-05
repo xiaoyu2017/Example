@@ -16,15 +16,55 @@ public abstract class BaseBean implements Serializable {
 
     private static final long serialVersionUID = -2282893766014331881L;
 
-    public Long id;
+    protected Long id;
 
-    public Date createTime;
+    protected Date createTime;
 
-    public Date updateTime;
+    protected Date updateTime;
 
-    public Boolean status = true;
+    protected Boolean status = true;
 
-    public Integer sort = 0;
+    protected Integer sort = 0;
 
-    public abstract String toJson();
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    protected abstract String toJson();
 }
