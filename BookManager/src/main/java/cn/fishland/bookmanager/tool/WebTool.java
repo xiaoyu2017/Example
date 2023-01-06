@@ -1,6 +1,5 @@
 package cn.fishland.bookmanager.tool;
 
-import cn.fishland.bookmanager.bean.vo.CategoryVo;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -37,15 +37,32 @@ public class WebTool {
     public static String dbUser = "root";
     public static String dbPassword = "root";
 
+    public static String FILE_ATTACHMENT_PATH = "/Users/yujiangzhong/Documents/BookManager/file";
+    public static String IMAGE_ATTACHMENT_PATH = "/Users/yujiangzhong/Documents/BookManager/image";
+    public static String TEMP_ATTACHMENT_PATH = "/Users/yujiangzhong/Documents/BookManager/temp";
+
     private static SqlSessionFactory sqlSessionFactory;
 
     static {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
+            /*初始化mybatis*/
             String path = "mybatis.xml";
             InputStream inputStream = Resources.getResourceAsStream(path);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+            /*初始化附件文件*/
+            File file = new File(FILE_ATTACHMENT_PATH);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            File file2 = new File(IMAGE_ATTACHMENT_PATH);
+            if (!file2.exists()) {
+                file2.mkdirs();
+            }
+            File file3 = new File(TEMP_ATTACHMENT_PATH);
+            if (!file3.exists()) {
+                file3.mkdirs();
+            }
         } catch (Exception e) {
             System.out.println("无法注册mysql驱动类。。。");
         }
@@ -214,6 +231,19 @@ public class WebTool {
         properties.setProperty("kaptcha.word.impl", "com.google.code.kaptcha.text.impl.DefaultWordRenderer");
         defaultKaptcha.setConfig(new Config(properties));
         return defaultKaptcha;
+    }
+
+    private static String[] SIZE_UNIT = {"B", "KB", "MB", "GB", "TB"};
+
+    public static String unitChange(Double size) {
+        for (String unit : SIZE_UNIT) {
+            if (size >= 1024) {
+                size = size / 1024;
+            } else {
+                return size + "|" + unit;
+            }
+        }
+        return null;
     }
 
 }

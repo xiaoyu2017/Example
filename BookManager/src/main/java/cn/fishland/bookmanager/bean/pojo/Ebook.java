@@ -23,7 +23,7 @@ public class Ebook extends BaseBean {
     /** 语言 */
     private String language;
     /** 页数 */
-    private Integer pages;
+    private String pages;
     /** 是否带书签 */
     private Boolean bookmark;
     /** 简介 */
@@ -34,7 +34,7 @@ public class Ebook extends BaseBean {
     /** 作者 */
     private AuthorTag author;
     /** ISBN */
-    private List<IsbnTag> Isbn;
+    private List<IsbnTag> isbn;
 
     /** 封面 */
     private Attachment image;
@@ -77,11 +77,11 @@ public class Ebook extends BaseBean {
         this.language = language;
     }
 
-    public Integer getPages() {
+    public String getPages() {
         return pages;
     }
 
-    public void setPages(Integer pages) {
+    public void setPages(String pages) {
         this.pages = pages;
     }
 
@@ -118,11 +118,11 @@ public class Ebook extends BaseBean {
     }
 
     public List<IsbnTag> getIsbn() {
-        return Isbn;
+        return isbn;
     }
 
     public void setIsbn(List<IsbnTag> isbn) {
-        Isbn = isbn;
+        this.isbn = isbn;
     }
 
     public Attachment getImage() {
@@ -147,6 +147,30 @@ public class Ebook extends BaseBean {
 
     public void setCategory(List<Category> category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Ebook{" +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", sort=" + sort +
+                ", bookName='" + bookName + '\'' +
+                ", edition='" + edition + '\'' +
+                ", year='" + year + '\'' +
+                ", language='" + language + '\'' +
+                ", pages='" + pages + '\'' +
+                ", bookmark=" + bookmark +
+                ", summary='" + summary + '\'' +
+                ", publisher=" + publisher +
+                ", author=" + author +
+                ", isbn=" + isbn +
+                ", image=" + image +
+                ", file=" + file +
+                ", category=" + category +
+                "} " + super.toString();
     }
 
     @Override
