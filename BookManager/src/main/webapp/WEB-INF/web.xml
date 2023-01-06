@@ -25,6 +25,17 @@
     </servlet-mapping>
     <!--类别接口-end-->
 
+    <!--电子书接口-start-->
+    <servlet>
+        <servlet-name>ebookServlet</servlet-name>
+        <servlet-class>cn.fishland.bookmanager.controller.EbookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ebookServlet</servlet-name>
+        <url-pattern>/api/ebook/*</url-pattern>
+    </servlet-mapping>
+    <!--电子书接口-end-->
+
     <!--home-start-->
     <servlet>
         <servlet-name>homeServlet</servlet-name>
