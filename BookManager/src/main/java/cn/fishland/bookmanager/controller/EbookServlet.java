@@ -74,8 +74,8 @@ public class EbookServlet extends HttpServlet {
         // 处理上传结果
         uploadParseRequest(servletFileUpload, req, ebook);
 
-        System.out.println("处理结束。。。");
-        System.out.println(ebook);
+        // 保存出版社
+
 
         try {
             // 上传成功跳转

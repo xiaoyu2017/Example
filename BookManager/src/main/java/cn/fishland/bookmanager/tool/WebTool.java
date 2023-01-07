@@ -178,7 +178,7 @@ public class WebTool {
 
 
     public static Object getMapper(Class clazz) throws IOException {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+        SqlSession sqlSession = sqlSessionFactory.openSession(true);
         return sqlSession.getMapper(clazz);
     }
 

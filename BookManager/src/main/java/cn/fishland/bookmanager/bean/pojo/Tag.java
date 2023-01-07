@@ -12,6 +12,9 @@ import cn.fishland.bookmanager.bean.BaseBean;
 public abstract class Tag extends BaseBean {
     private static final long serialVersionUID = 3119843929963533520L;
 
+    public Tag() {
+    }
+
     /** 标签类型 */
     protected Integer type;
     /** 标签名称 */

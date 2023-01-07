@@ -2,20 +2,6 @@ create database BookManager;
 
 use BookManager;
 
-create table tag
-(
-    `id`         int AUTO_INCREMENT,
-    `createTime` timestamp          NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updateTime` timestamp          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `sort`       int(1)             NOT NULL DEFAULT 0,
-    `status`     tinyint(1)         NOT NULL DEFAULT 1,
-    `name`       varchar(20) UNIQUE NOT NULL,
-    `type`       tinyint(1)         NOT NULL,
-    `parent`     int,
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4;
-
 create table attachment
 (
     `id`         int AUTO_INCREMENT,
@@ -44,7 +30,55 @@ create table category
     `sort`       int(1)             NOT NULL DEFAULT 0,
     `status`     tinyint(1)         NOT NULL DEFAULT 1,
     `name`       varchar(20) UNIQUE NOT NULL,
-    `parent`     int,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+create table tag
+(
+    `id`         int AUTO_INCREMENT,
+    `createTime` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateTime` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `sort`       int(1)      NOT NULL DEFAULT 0,
+    `status`     tinyint(1)  NOT NULL DEFAULT 1,
+    `name`       varchar(20) NOT NULL,
+    `type`       tinyint(1)  NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+create table ebook
+(
+    `id`         int AUTO_INCREMENT,
+    `createTime` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateTime` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `sort`       int(1)       NOT NULL DEFAULT 0,
+    `status`     tinyint(1)   NOT NULL DEFAULT 1,
+    `book_name`  varchar(100) NOT NULL,
+    `edition`    varchar(10)  NOT NULL,
+    `year`       varchar(10)  NOT NULL,
+    `language`   varchar(10)  NOT NULL,
+    `pages`      varchar(10),
+    `bookmark`   tinyint(1)            DEFAULT 0,
+    `summary`    varchar(10),
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+create table ebook_tag
+(
+    `id`  int AUTO_INCREMENT,
+    `eid` int,
+    `tid` int,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+create table ebook_category
+(
+    `id`  int AUTO_INCREMENT,
+    `eid` int,
+    `cid` int,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;

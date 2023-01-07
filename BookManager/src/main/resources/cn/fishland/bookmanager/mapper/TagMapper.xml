@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fishland.bookmanager.mapper.TagMapper">
+
+    <!--Tag insert(Tag... tag);-->
+    <insert id="insertPublisherTag" parameterType="PublisherTag" useGeneratedKeys="true" keyProperty="id">
+        insert into tag(`status`, `sort`, `type`, `name`)
+        <foreach collection="tags" item="tag" separator="," open="values">
+            (#{tag.status}, #{tag.sort}, #{tag.type}, #{tag.name})
+        </foreach>
+    </insert>
+
+    <!--Tag insertAuthorTag(Tag... tag);-->
+    <insert id="insertAuthorTag" parameterType="AuthorTag" useGeneratedKeys="true" keyProperty="id">
+        insert into tag(`status`, `sort`, `type`, `name`)
+        <foreach collection="tags" item="tag" separator="," open="values">
+            (#{tag.status}, #{tag.sort}, #{tag.type}, #{tag.name})
+        </foreach>
+    </insert>
+
+    <!--Tag insertIsbnTag(Tag... tag);-->
+    <insert id="insertIsbnTag" parameterType="IsbnTag" useGeneratedKeys="true" keyProperty="id">
+        insert into tag(`status`, `sort`, `type`, `name`)
+        <foreach collection="tags" item="tag" separator="," open="values">
+            (#{tag.status}, #{tag.sort}, #{tag.type}, #{tag.name})
+        </foreach>
+    </insert>
+</mapper>

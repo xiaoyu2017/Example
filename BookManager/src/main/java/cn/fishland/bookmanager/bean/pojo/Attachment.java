@@ -28,6 +28,9 @@ public abstract class Attachment extends BaseBean {
     /** 文件物理地址 */
     protected String filePath;
 
+    /** 父类id */
+    private Long parent;
+
     public String getAid() {
         return aid;
     }
@@ -86,5 +89,17 @@ public abstract class Attachment extends BaseBean {
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Long getParent() {
+        return parent;
+    }
+
+    public void setParent(Long parent) {
+        this.parent = parent;
     }
 }

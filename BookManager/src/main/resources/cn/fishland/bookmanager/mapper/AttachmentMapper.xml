@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fishland.bookmanager.mapper.AttachmentMapper">
+
+    <!--int saveFileAttachment(@Param("attachments") FileAttachment... attachments);-->
+    <insert id="saveFileAttachment" parameterType="FileAttachment" useGeneratedKeys="true" keyProperty="id">
+        insert into attachment( `sort`, `status`, `aid`, `type`, `name`, `size`, `sizeUnit`, `extension`, `filePath`,
+        `dynamicId`, `parent`)
+        <foreach collection="attachments" item="attachment" separator="," open="values">
+            (#{attachment.sort}, #{attachment.status}, #{attachment.aid}, #{attachment.type},
+            #{attachment.name}, #{attachment.size}, #{attachment.sizeUnit}, #{attachment.extension},
+            #{attachment.filePath}, #{attachment.dynamicId}, #{attachment.parent})
+        </foreach>
+    </insert>
+
+    <!--int saveImageAttachment(@Param("attachments") ImageAttachment... attachments);-->
+    <insert id="saveImageAttachment" parameterType="ImageAttachment" useGeneratedKeys="true" keyProperty="id">
+        insert into attachment( `sort`, `status`, `aid`, `type`, `name`, `size`, `sizeUnit`, `extension`, `filePath`,
+        `dynamicId`, `parent`)
+        <foreach collection="attachments" item="attachment" separator="," open="values">
+            (#{attachment.sort}, #{attachment.status}, #{attachment.aid}, #{attachment.type},
+            #{attachment.name}, #{attachment.size}, #{attachment.sizeUnit}, #{attachment.extension},
+            #{attachment.filePath}, #{attachment.dynamicId}, #{attachment.parent})
+        </foreach>
+    </insert>
+
+</mapper>

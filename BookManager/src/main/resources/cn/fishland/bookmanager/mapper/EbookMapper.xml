@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.fishland.bookmanager.mapper.EbookMapper">
 
+    <!--int insertAll(@Param("ebooks") Ebook... ebooks);-->
+    <insert id="insertAll" parameterType="Ebook" useGeneratedKeys="true" keyProperty="id">
+        insert into ebook(`sort`, `status`, `book_name`, `edition`, `year`, `language`, `pages`, `bookmark`, `summary`)
+        <foreach collection="ebooks" item="ebook" open="values" separator=",">
+            (#{ebook.sort}, #{ebook.status}, #{ebook.book_name}, #{ebook.edition}, #{ebook.year}, #{ebook.language},
+            #{ebook.pages}, #{ebook.bookmark}, #{ebook.summary})
+        </foreach>
+    </insert>
 </mapper>
