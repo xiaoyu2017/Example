@@ -4,8 +4,6 @@ import cn.fishland.bookmanager.bean.pojo.AuthorTag;
 import cn.fishland.bookmanager.bean.pojo.IsbnTag;
 import cn.fishland.bookmanager.bean.pojo.PublisherTag;
 
-import java.util.List;
-
 /**
  * 标签服务类
  *
@@ -14,10 +12,10 @@ import java.util.List;
  */
 public interface TagService {
 
-    List<PublisherTag> savePublisherTag(PublisherTag... tags);
+    boolean savePublisherTag(PublisherTag... tags);
 
-    List<AuthorTag> saveAuthorTag(AuthorTag... tags);
+    boolean saveAuthorTag(AuthorTag... tags);
 
-    List<IsbnTag> saveIsbnTag(IsbnTag... tags);
+    boolean saveIsbnTag(IsbnTag... tags);
 
 }

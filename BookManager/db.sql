@@ -60,16 +60,21 @@ create table ebook
     `language`   varchar(10)  NOT NULL,
     `pages`      varchar(10),
     `bookmark`   tinyint(1)            DEFAULT 0,
-    `summary`    varchar(10),
+    `summary`    varchar(1000),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
 create table ebook_tag
 (
-    `id`  int AUTO_INCREMENT,
-    `eid` int,
-    `tid` int,
+    `id`   int AUTO_INCREMENT,
+    `createTime` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateTime` timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `sort`       int(1)       NOT NULL DEFAULT 0,
+    `status`     tinyint(1)   NOT NULL DEFAULT 1,
+    `eid`  int        NOT NULL,
+    `tid`  int        NOT NULL,
+    `type` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
@@ -103,3 +108,11 @@ create table if not exists user
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
+
+/*慎用*/
+delete from attachment where 1=1;
+delete from category where 1=1;
+delete from ebook where 1=1;
+delete from ebook_category where 1=1;
+delete from ebook_tag where 1=1;
+delete from tag where 1=1;

@@ -1,5 +1,9 @@
 package cn.fishland.bookmanager.tool;
 
+import cn.fishland.bookmanager.mapper.AttachmentMapper;
+import cn.fishland.bookmanager.mapper.EbookMapper;
+import cn.fishland.bookmanager.mapper.EbookTagMapper;
+import cn.fishland.bookmanager.mapper.TagMapper;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +68,7 @@ public class WebTool {
                 file3.mkdirs();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("无法注册mysql驱动类。。。");
         }
     }
@@ -244,6 +249,29 @@ public class WebTool {
             }
         }
         return null;
+    }
+
+    public static EbookMapper ebookMapper;
+    public static TagMapper tagMapper;
+    public static AttachmentMapper attachmentMapper;
+    public static EbookTagMapper ebookTagMapper;
+
+    static {
+        try {
+            ebookMapper = (EbookMapper) WebTool.getMapper(EbookMapper.class);
+            log.debug("init EbookMapper class...");
+
+            tagMapper = (TagMapper) WebTool.getMapper(TagMapper.class);
+            log.debug("init TagMapper class...");
+
+            attachmentMapper = (AttachmentMapper) WebTool.getMapper(AttachmentMapper.class);
+            log.debug("init AttachmentMapper class...");
+
+            ebookTagMapper = (EbookTagMapper) WebTool.getMapper(EbookTagMapper.class);
+            log.debug("init EbookTagMapper class...");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

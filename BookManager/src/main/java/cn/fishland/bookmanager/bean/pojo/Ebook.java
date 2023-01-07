@@ -37,9 +37,9 @@ public class Ebook extends BaseBean {
     private List<IsbnTag> isbn;
 
     /** 封面 */
-    private Attachment image;
+    private ImageAttachment image;
     /** 文件 */
-    private Attachment file;
+    private FileAttachment file;
 
     /** 类别 */
     private List<Category> category;
@@ -125,19 +125,19 @@ public class Ebook extends BaseBean {
         this.isbn = isbn;
     }
 
-    public Attachment getImage() {
+    public ImageAttachment getImage() {
         return image;
     }
 
-    public void setImage(Attachment image) {
+    public void setImage(ImageAttachment image) {
         this.image = image;
     }
 
-    public Attachment getFile() {
+    public FileAttachment getFile() {
         return file;
     }
 
-    public void setFile(Attachment file) {
+    public void setFile(FileAttachment file) {
         this.file = file;
     }
 

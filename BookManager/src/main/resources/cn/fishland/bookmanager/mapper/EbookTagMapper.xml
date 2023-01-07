@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.fishland.bookmanager.mapper.EbookTagMapper">
+    <!--int insertEbookPublisher(@Param("tags") EbookTag... tags);-->
+    <insert id="insertEbookTag" parameterType="EbookTag" useGeneratedKeys="true" keyProperty="id">
+        insert into ebook_tag (`sort`, `status`, `eid`, `tid`, `type`)
+        <foreach collection="ebookTags" item="ebookTag" open="values" separator=",">
+            (#{ebookTag.sort}, #{ebookTag.status}, #{ebookTag.eid}, #{ebookTag.tid}, #{ebookTag.type})
+        </foreach>
+    </insert>
+</mapper>

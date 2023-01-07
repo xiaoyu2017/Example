@@ -2,6 +2,8 @@ package cn.fishland.bookmanager.controller;
 
 import cn.fishland.bookmanager.bean.pojo.*;
 import cn.fishland.bookmanager.bean.vo.ReturnData;
+import cn.fishland.bookmanager.service.EbookService;
+import cn.fishland.bookmanager.service.impl.EbookServiceImpl;
 import cn.fishland.bookmanager.tool.WebTool;
 import com.alibaba.fastjson2.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -74,8 +76,12 @@ public class EbookServlet extends HttpServlet {
         // 处理上传结果
         uploadParseRequest(servletFileUpload, req, ebook);
 
-        // 保存出版社
-
+        // 保存数据库
+        EbookService ebookService = new EbookServiceImpl();
+        if (!ebookService.save(ebook)) {
+            log.error("servlet save ebook error");
+            return;
+        }
 
         try {
             // 上传成功跳转
@@ -105,11 +111,6 @@ public class EbookServlet extends HttpServlet {
             @Override
             public void update(long pBytesRead, long pContentLength, int pItems) {
                 log.info(String.format("总大小：%s， 已上传：%s", pContentLength, pBytesRead));
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
         });
         // 处理乱码问题
@@ -237,13 +238,10 @@ public class EbookServlet extends HttpServlet {
             // 物理文件地址
             String filePath;
 
-            // 附件对象
-            Attachment attachment;
-
             //判断是文件还是图片
             if ("file".equals(fieldName)) {
                 filePath = WebTool.FILE_ATTACHMENT_PATH + "/" + aid + "." + extension;
-                attachment = new FileAttachment();
+                FileAttachment attachment = new FileAttachment();
                 // 保存附件信息
                 attachment.setAid(aid);
                 attachment.setName(name);
@@ -254,7 +252,7 @@ public class EbookServlet extends HttpServlet {
                 ebook.setFile(attachment);
             } else if ("image".equals(fieldName)) {
                 filePath = WebTool.IMAGE_ATTACHMENT_PATH + "/" + aid + "." + extension;
-                attachment = new ImageAttachment();
+                ImageAttachment attachment = new ImageAttachment();
                 // 保存附件信息
                 attachment.setAid(aid);
                 attachment.setName(name);
