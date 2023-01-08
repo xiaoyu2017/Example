@@ -1,13 +1,12 @@
 package cn.fishland.bookmanager.service.impl;
 
-import cn.fishland.bookmanager.bean.pojo.Ebook;
-import cn.fishland.bookmanager.bean.pojo.EbookTag;
-import cn.fishland.bookmanager.bean.pojo.IsbnTag;
+import cn.fishland.bookmanager.bean.pojo.*;
 import cn.fishland.bookmanager.service.AttachmentService;
 import cn.fishland.bookmanager.service.EbookService;
 import cn.fishland.bookmanager.service.TagService;
 import cn.fishland.bookmanager.tool.WebTool;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +89,43 @@ public class EbookServiceImpl implements EbookService {
                 if (insertEbookTagIsbn <= 0) {
                     log.error("ebook save EbookTagIsbn error...");
                     return false;
+                }
+
+                // 保存类别
+                List<Category> categories = ebook.getCategory();
+                if (categories != null && categories.size() > 0) {
+                    // 因为类别mapper没用代理接口，所以只能直接使用sqlSession
+                    SqlSession sqlSession = WebTool.sqlSession();
+
+                    // 获得数据库中已存在的类别
+                    List<Category> list = sqlSession.selectList("categoryMapper.selectByName", categories.toArray(new Category[0]));
+
+                    // 取当前类别和数据库中的差集
+                    categories.removeAll(list);
+
+                    // 直接保存类别，忽略操作行数，可能存在数据库中存在的类别
+                    if (categories.size() > 0) {
+                        int insertCategories = sqlSession.insert("categoryMapper.save", categories.toArray(new Category[0]));
+                        sqlSession.commit();
+                        if (insertCategories != categories.size()) {
+                            log.info("save ebook category error");
+                            return false;
+                        }
+                    }
+
+                    // 合并集合
+                    categories.addAll(list);
+
+                    // 保存类别中间表
+                    List<EbookCategory> ebookCategoryList = new ArrayList<>();
+                    for (Category category : categories) {
+                        ebookCategoryList.add(new EbookCategory(ebook.getId(), category.getId()));
+                    }
+                    int insertEbookCategory = WebTool.ebookCategoryMapper.insertEbookCategory(ebookCategoryList.toArray(new EbookCategory[0]));
+                    if (insertEbookCategory != ebookCategoryList.size()) {
+                        log.error("save ebook EbookCategory error...");
+                        return false;
+                    }
                 }
             }
 

@@ -209,22 +209,18 @@
                             <label class="mr-sm-2 sr-only" for="year">发行年份</label>
                             <select class="custom-select mr-sm-2" id="year" name="year" required>
                                 <option selected>请选择</option>
-                                <option value="1">2023</option>
-                                <option value="2">2021</option>
-                                <option value="3">2020</option>
-                                <option value="3">2019</option>
-                                <option value="3">2018</option>
-                                <option value="3">2017</option>
-                                <option value="3">2016</option>
+                                <c:forEach items="${years}" var="year">
+                                    <option value="${year}">${year}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="col">
                             <label class="mr-sm-2 sr-only" for="language">语言</label>
                             <select class="custom-select mr-sm-2" id="language" name="language" required>
                                 <option selected>请选择</option>
-                                <option value="1">Chinese</option>
-                                <option value="2">English</option>
-                                <option value="3">Japanese</option>
+                                <c:forEach items="${languages}" var="language">
+                                    <option value="${language}">${language}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="col">

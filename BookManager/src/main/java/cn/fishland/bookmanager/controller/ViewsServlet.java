@@ -60,6 +60,7 @@ public class ViewsServlet extends HttpServlet {
     }
 
     private void ebook(HttpServletRequest req, HttpServletResponse resp) {
-
+        req.setAttribute("years", WebTool.years());
+        req.setAttribute("languages", WebTool.LANGUAGES);
     }
 }

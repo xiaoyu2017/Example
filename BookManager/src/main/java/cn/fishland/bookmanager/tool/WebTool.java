@@ -1,9 +1,7 @@
 package cn.fishland.bookmanager.tool;
 
-import cn.fishland.bookmanager.mapper.AttachmentMapper;
-import cn.fishland.bookmanager.mapper.EbookMapper;
-import cn.fishland.bookmanager.mapper.EbookTagMapper;
-import cn.fishland.bookmanager.mapper.TagMapper;
+import cn.fishland.bookmanager.bean.pojo.Category;
+import cn.fishland.bookmanager.mapper.*;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -251,10 +250,31 @@ public class WebTool {
         return null;
     }
 
+    /**
+     * 现在至过去50年的年字符串
+     *
+     * @return 年份字符串
+     */
+    public static String[] years() {
+        LocalDate localDate = LocalDate.now();
+        int year = localDate.getYear();
+        String[] yearArray = new String[50];
+        for (int i = 0; i < yearArray.length; i++) {
+            yearArray[i] = year + "";
+            year--;
+        }
+        return yearArray;
+    }
+
+    /** 常用语言字符串数组 */
+    public static String[] LANGUAGES = {"Chinese", "English"};
+
+    /*所有Mapper接口*/
     public static EbookMapper ebookMapper;
     public static TagMapper tagMapper;
     public static AttachmentMapper attachmentMapper;
     public static EbookTagMapper ebookTagMapper;
+    public static EbookCategoryMapper ebookCategoryMapper;
 
     static {
         try {
@@ -269,9 +289,33 @@ public class WebTool {
 
             ebookTagMapper = (EbookTagMapper) WebTool.getMapper(EbookTagMapper.class);
             log.debug("init EbookTagMapper class...");
+
+            ebookCategoryMapper = (EbookCategoryMapper) WebTool.getMapper(EbookCategoryMapper.class);
+            log.debug("init EbookCategoryMapper class...");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        SqlSession sqlSession = WebTool.sqlSession();
+        Category[] categories = new Category[3];
+        Category category = new Category();
+        category.setName("科幻1");
+        categories[0] = category;
+
+        Category category1 = new Category();
+        category1.setName("科幻3");
+        categories[1] = category1;
+
+        Category category2 = new Category();
+        category2.setName("科幻33232424");
+        categories[2] = category2;
+
+
+        List<Category> list = sqlSession.selectList("categoryMapper.selectByName", categories);
+
+        System.out.println(list);
     }
 
 }

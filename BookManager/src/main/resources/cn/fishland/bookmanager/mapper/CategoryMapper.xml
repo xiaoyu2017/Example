@@ -4,8 +4,8 @@
 <mapper namespace="categoryMapper">
     <!--批量新增-新增成功后返回id到参数中-参数必须是list集合-->
     <insert id="save" useGeneratedKeys="true" keyProperty="id" parameterType="Category">
-        insert into category ( sort, status, name) values
-        <foreach collection="array" item="category" separator=",">
+        insert into category ( `sort`, `status`, `name`)
+        <foreach collection="array" item="category" open="values" separator=",">
             (#{category.sort}, #{category.status}, #{category.name})
         </foreach>
     </insert>
@@ -50,4 +50,10 @@
         order by updateTime DESC
     </select>
 
+    <select id="selectByName" resultType="Category" parameterType="Category">
+        select * from category where name in
+        <foreach collection="array" item="category" open="(" close=")" separator=",">
+            #{category.name}
+        </foreach>
+    </select>
 </mapper>
