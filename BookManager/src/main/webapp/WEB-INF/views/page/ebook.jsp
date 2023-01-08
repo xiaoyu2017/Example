@@ -106,8 +106,14 @@
                             <input type="checkbox">
                         </th>
                         <th scope="col">ID</th>
-                        <th scope="col">排序</th>
-                        <th scope="col">名称</th>
+                        <th scope="col">书名</th>
+                        <th scope="col">作者</th>
+                        <th scope="col">出版社</th>
+                        <th scope="col">第几版</th>
+                        <th scope="col">发行年份</th>
+                        <th scope="col">语言</th>
+                        <th scope="col">页数</th>
+                        <th scope="col">是否带书签</th>
                         <th scope="col">状态</th>
                         <th scope="col">创建时间</th>
                         <th scope="col">修改时间</th>
@@ -116,26 +122,31 @@
                     </thead>
                     <tbody>
 
-                    <c:forEach items="${categoryPageInfo.list}" var="category" varStatus="item">
+                    <c:forEach items="${ebooksPageInfo.list}" var="ebook" varStatus="item">
                         <tr>
                             <td>
                                 <input type="checkbox" id="select${item.index}">
                             </td>
-                            <td>${category.id}</td>
-                            <td>${category.sort}</td>
-                            <td>${category.name}</td>
-                            <td>${category.status}</td>
-                            <td><fmt:formatDate value="${category.createTime}" type="both"/></td>
-                            <td><fmt:formatDate value="${category.updateTime}" type="both"/></td>
+                            <td>${ebook.id}</td>
+                            <td>${ebook.bookName}</td>
+                            <td>${ebook.author.name}</td>
+                            <td>${ebook.publisher.name}</td>
+                            <td>${ebook.edition}</td>
+                            <td>${ebook.year}</td>
+                            <td>${ebook.language}</td>
+                            <td>${ebook.pages}</td>
+                            <td>${ebook.bookmark}</td>
+                            <td>${ebook.status}</td>
+                            <td><fmt:formatDate value="${ebook.createTime}" type="both"/></td>
+                            <td><fmt:formatDate value="${ebook.updateTime}" type="both"/></td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group"
                                      aria-label="Basic mixed styles example">
                                     <button type="button" class="btn btn-danger"
-                                            onclick="categoryDelete('${category.id}')">删除
+                                            onclick="">删除
                                     </button>
                                     <button type="button" class="btn btn-success"
-                                            onclick="showUpdateModel('${category.id}',
-                                                    '${category.sort}', '${category.name}', '${category.status}')">修改
+                                            onclick="">修改
                                     </button>
                                 </div>
                             </td>
@@ -147,7 +158,7 @@
             </div>
             <div class="row">
                 <div class="col align-self-start">
-                    显示第${categoryPageInfo.pageNum}页记录，总共${categoryPageInfo.total}行${categoryPageInfo.pages}页记录。
+                    显示第${ebooksPageInfo.pageNum}页记录，总共${ebooksPageInfo.total}行${ebooksPageInfo.pages}页记录。
                 </div>
                 <div class="col align-self-end">
                     <nav aria-label="Page navigation example">
@@ -159,7 +170,7 @@
                                 <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <c:forEach items="${categoryPageInfo.navigatepageNums}" var="navigatepageNum">
+                            <c:forEach items="${ebooksPageInfo.navigatepageNums}" var="navigatepageNum">
                                 <li class="page-item">
                                     <a class="page-link"
                                        href="${pageContext.request.contextPath}/api/category/page/${navigatepageNum}${searchParam}">${navigatepageNum}</a>
@@ -167,7 +178,7 @@
                             </c:forEach>
                             <li class="page-item">
                                 <a class="page-link" aria-label="Next"
-                                   href="${pageContext.request.contextPath}/api/category/page/${categoryPageInfo.nextPage}${searchParam}">
+                                   href="${pageContext.request.contextPath}/api/category/page/${ebooksPageInfo.nextPage}${searchParam}">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
@@ -293,73 +304,6 @@
         $('#editModelTitle').text('新增图书');
         $('#editModelForm').prop("action", "${pageContext.request.contextPath}/api/ebook/add");
         editModal.show();
-    }
-
-    // 删除类别
-    function categoryDelete(id) {
-        $.ajax({
-            url: "${pageContext.request.contextPath}/api/category/delete",
-            data: {
-                id: id
-            },
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                if (data.error === 0) {
-                    $(window).attr('location', data.to);
-                } else {
-                    setMessageModel(data.message);
-                    messageModel.show();
-                    location.reload();
-                }
-            }
-        });
-    }
-
-    // 修改类别
-    function showUpdateModel(a, b, c, d) {
-        $('#id').val(a);
-        $('#sort').val(b);
-        $('#name').val(c);
-        if (d) {
-            $("#status").prop("checked", true)
-        }
-        $('#editModelTitle').text('修改类别');
-        $('#editModelAddBtn').hide();
-        $('#editModelUpdateBtn').show();
-        editModal.show();
-    }
-
-    function update() {
-        $.ajax({
-            url: "${pageContext.request.contextPath}/api/category/update",
-            data: $('#editModelForm').serialize(),
-            type: "POST",
-            dataType: "json",
-            success: function (data) {
-                if (data.error === 0) {
-                    $(window).attr('location', data.to);
-                } else {
-                    setMessageModel(data.message);
-                    messageModel.show();
-                    location.reload();
-                }
-            }
-        });
-    }
-
-    // 查询清空
-    function searchClear() {
-        $('input').each(function () {
-            $(this).val("");
-        });
-        $(window).attr('location', "/BookManager/view/category");
-    }
-
-    function setMessageModel(title, message) {
-        $('#messageModelTitle').text(title);
-        $('#messageModelBody').text(message);
     }
 
     $(function () {

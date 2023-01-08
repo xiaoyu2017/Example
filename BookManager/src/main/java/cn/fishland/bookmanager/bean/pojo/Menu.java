@@ -13,6 +13,8 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Menu extends BaseBean {
+    private static final long serialVersionUID = -4520157129066294361L;
+
     private String name;
     private String icon;
     private String link;

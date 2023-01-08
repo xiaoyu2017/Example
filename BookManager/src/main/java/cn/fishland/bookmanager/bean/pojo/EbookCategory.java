@@ -10,6 +10,7 @@ import com.alibaba.fastjson2.JSON;
  * @version 1.0
  */
 public class EbookCategory extends BaseBean {
+    private static final long serialVersionUID = -3209469487725440744L;
 
     private Long eid;
     private Long cid;

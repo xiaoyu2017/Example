@@ -9,7 +9,7 @@ import cn.fishland.bookmanager.bean.BaseBean;
  * @author xiaoyu
  * @version 1.0
  */
-public abstract class Tag extends BaseBean {
+public class Tag extends BaseBean {
     private static final long serialVersionUID = 3119843929963533520L;
 
     public Tag() {
@@ -30,5 +30,10 @@ public abstract class Tag extends BaseBean {
 
     public Integer getType() {
         return type;
+    }
+
+    @Override
+    protected String toJson() {
+        return null;
     }
 }

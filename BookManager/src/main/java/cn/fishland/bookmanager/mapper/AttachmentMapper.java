@@ -16,4 +16,7 @@ public interface AttachmentMapper {
 
     int saveImageAttachment(@Param("attachments") ImageAttachment... attachments);
 
+    FileAttachment findFileAttachmentByEbookId(@Param("eid") int eid);
+
+    ImageAttachment findImageAttachmentByEbookId(@Param("eid") int eid);
 }

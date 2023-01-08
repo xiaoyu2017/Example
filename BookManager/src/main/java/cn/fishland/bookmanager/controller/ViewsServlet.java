@@ -1,7 +1,9 @@
 package cn.fishland.bookmanager.controller;
 
 import cn.fishland.bookmanager.service.CategoryService;
+import cn.fishland.bookmanager.service.EbookService;
 import cn.fishland.bookmanager.service.impl.CategoryServiceImpl;
+import cn.fishland.bookmanager.service.impl.EbookServiceImpl;
 import cn.fishland.bookmanager.tool.WebTool;
 
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import java.io.IOException;
 public class ViewsServlet extends HttpServlet {
 
     private CategoryService categoryService;
+    private EbookService ebookService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,7 +63,14 @@ public class ViewsServlet extends HttpServlet {
     }
 
     private void ebook(HttpServletRequest req, HttpServletResponse resp) {
+        ebookService = new EbookServiceImpl();
+
+        req.setAttribute("menuActive", "ebook");
         req.setAttribute("years", WebTool.years());
         req.setAttribute("languages", WebTool.LANGUAGES);
+
+        // 获得所有电子书
+        req.setAttribute("ebooksPageInfo", ebookService.findAll(1, 10, null));
+
     }
 }

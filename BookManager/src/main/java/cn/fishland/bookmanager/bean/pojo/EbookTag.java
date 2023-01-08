@@ -10,10 +10,12 @@ import com.alibaba.fastjson2.JSON;
  * @version 1.0
  */
 public class EbookTag extends BaseBean {
+    private static final long serialVersionUID = -9094255401081140194L;
 
     private Long eid;
     private Long tid;
     private Integer type;
+    private Tag tag;
 
     public EbookTag() {
     }
@@ -46,6 +48,14 @@ public class EbookTag extends BaseBean {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Tag getTag() {
+        return tag;
+    }
+
+    public void setTag(Tag tag) {
+        this.tag = tag;
     }
 
     @Override

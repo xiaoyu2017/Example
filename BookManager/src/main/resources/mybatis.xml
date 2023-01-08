@@ -13,6 +13,7 @@
         <!--<setting name="mapUnderscoreToCamelCase" value="true"/>-->
 
         <!--是否开启懒加载（开启懒加载要确保aggressiveLazyLoading属性为false）-->
+        <setting name="aggressiveLazyLoading" value="false"/>
         <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
 

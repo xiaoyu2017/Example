@@ -13,6 +13,7 @@ import java.util.Objects;
  * @version 1.0
  */
 public class User extends BaseBean {
+    private static final long serialVersionUID = -1847419447948018887L;
 
     private String nickName;
     private String name;

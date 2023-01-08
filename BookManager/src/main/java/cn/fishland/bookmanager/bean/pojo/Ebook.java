@@ -42,7 +42,7 @@ public class Ebook extends BaseBean {
     private FileAttachment file;
 
     /** 类别 */
-    private List<Category> category;
+    private List<Category> categories;
 
 
     public String getBookName() {
@@ -141,13 +141,14 @@ public class Ebook extends BaseBean {
         this.file = file;
     }
 
-    public List<Category> getCategory() {
-        return category;
+    public List<Category> getCategories() {
+        return categories;
     }
 
-    public void setCategory(List<Category> category) {
-        this.category = category;
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
+
 
     @Override
     public String toString() {
@@ -169,7 +170,7 @@ public class Ebook extends BaseBean {
                 ", isbn=" + isbn +
                 ", image=" + image +
                 ", file=" + file +
-                ", category=" + category +
+                ", categories=" + categories +
                 "} " + super.toString();
     }
 

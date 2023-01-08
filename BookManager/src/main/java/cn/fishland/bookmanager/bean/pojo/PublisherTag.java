@@ -1,5 +1,7 @@
 package cn.fishland.bookmanager.bean.pojo;
 
+import com.alibaba.fastjson2.JSON;
+
 /**
  * 出版社标签类
  *
@@ -33,7 +35,7 @@ public class PublisherTag extends Tag {
 
     @Override
     protected String toJson() {
-        return null;
+        return JSON.toJSONString(this);
     }
 
 }

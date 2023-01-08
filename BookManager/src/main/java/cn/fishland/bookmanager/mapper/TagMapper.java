@@ -6,6 +6,8 @@ import cn.fishland.bookmanager.bean.pojo.PublisherTag;
 import cn.fishland.bookmanager.bean.pojo.Tag;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 标签类Mapper
  *
@@ -26,4 +28,11 @@ public interface TagMapper {
 
     int insertIsbnTag(@Param("tags") IsbnTag... tags);
 
+    Tag selectPublisherTag(int tid);
+
+    PublisherTag selectPublisherTagByEbookId(@Param("eid") int eid);
+
+    AuthorTag selectAuthorTagByEbookId(@Param("eid") int eid);
+
+    List<IsbnTag> selectIsbnTagByEbookId(@Param("eid") int eid);
 }

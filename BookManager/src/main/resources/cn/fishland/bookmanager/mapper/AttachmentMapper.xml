@@ -24,4 +24,19 @@
         </foreach>
     </insert>
 
+    <!--FileAttachment findFileAttachmentByEbookId(@Param("eid") int eid);-->
+    <select id="findFileAttachmentByEbookId" parameterType="int" resultType="FileAttachment">
+        select *
+        from attachment
+        where parent = #{eid}
+          and type = 0;
+    </select>
+
+    <!--ImageAttachment findImageAttachmentByEbookId(@Param("eid") int eid);-->
+    <select id="findImageAttachmentByEbookId" parameterType="int" resultType="ImageAttachment">
+        select *
+        from attachment
+        where parent = #{eid}
+          and type = 1;
+    </select>
 </mapper>

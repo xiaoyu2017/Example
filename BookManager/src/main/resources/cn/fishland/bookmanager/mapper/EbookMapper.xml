@@ -10,4 +10,52 @@
             #{ebook.pages}, #{ebook.bookmark}, #{ebook.summary})
         </foreach>
     </insert>
+    <!--List<Ebook> findAll();-->
+    <select id="findAll" parameterType="EbookVo" resultMap="ebookResult">
+        select * from ebook
+        <trim prefix="where" suffixOverrides="and|or">
+            <if test="name!=null and name!= ''">
+                `book_ame` like "%"#{bookName}"%" and
+            </if>
+            <if test="createStart!=null">
+                <![CDATA[createTime > #{createStart} and]]>
+            </if>
+            <if test="createEnd!=null">
+                <![CDATA[createTime < #{createEnd} and]]>
+            </if>
+            <if test="createEnd!=null">
+                <![CDATA[updateTime > #{updateStart} and]]>
+            </if>
+            <if test="createEnd!=null">
+                <![CDATA[updateTime < #{updateEnd} and]]>
+            </if>
+        </trim>
+        order by updateTime DESC
+    </select>
+    <resultMap id="ebookResult" type="Ebook">
+        <id property="id" column="id"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="status" column="status"/>
+        <result property="sort" column="sort"/>
+        <result property="bookName" column="book_name"/>
+        <result property="edition" column="edition"/>
+        <result property="year" column="year"/>
+        <result property="language" column="language"/>
+        <result property="pages" column="pages"/>
+        <result property="bookmark" column="bookmark"/>
+        <result property="summary" column="summary"/>
+        <association property="publisher" column="id" fetchType="lazy"
+                     select="cn.fishland.bookmanager.mapper.TagMapper.selectPublisherTagByEbookId"/>
+        <association property="author" column="id" fetchType="lazy"
+                     select="cn.fishland.bookmanager.mapper.TagMapper.selectAuthorTagByEbookId"/>
+        <association property="image" column="id" fetchType="lazy"
+                     select="cn.fishland.bookmanager.mapper.AttachmentMapper.findFileAttachmentByEbookId"/>
+        <association property="file" column="id" fetchType="lazy"
+                     select="cn.fishland.bookmanager.mapper.AttachmentMapper.findImageAttachmentByEbookId"/>
+        <collection property="isbn" ofType="IsbnTag" column="id" fetchType="lazy"
+                    select="cn.fishland.bookmanager.mapper.TagMapper.selectIsbnTagByEbookId"/>
+        <collection property="categories" ofType="Category" column="id" fetchType="lazy"
+                    select="categoryMapper.selectByEbookId"/>
+    </resultMap>
 </mapper>

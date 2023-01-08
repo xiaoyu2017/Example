@@ -12,4 +12,5 @@ import org.apache.ibatis.annotations.Param;
 public interface EbookTagMapper {
 
     int insertEbookTag(@Param("ebookTags") EbookTag... ebookTags);
+
 }

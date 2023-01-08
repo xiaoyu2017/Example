@@ -195,7 +195,7 @@ public class EbookServlet extends HttpServlet {
                         for (String category : categoryArray) {
                             list.add(new Category(category));
                         }
-                        ebook.setCategory(list);
+                        ebook.setCategories(list);
                     }
                     break;
                 default:

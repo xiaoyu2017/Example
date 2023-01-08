@@ -1,10 +1,13 @@
 package cn.fishland.bookmanager.service.impl;
 
 import cn.fishland.bookmanager.bean.pojo.*;
+import cn.fishland.bookmanager.bean.vo.EbookVo;
 import cn.fishland.bookmanager.service.AttachmentService;
 import cn.fishland.bookmanager.service.EbookService;
 import cn.fishland.bookmanager.service.TagService;
 import cn.fishland.bookmanager.tool.WebTool;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
@@ -92,7 +95,7 @@ public class EbookServiceImpl implements EbookService {
                 }
 
                 // 保存类别
-                List<Category> categories = ebook.getCategory();
+                List<Category> categories = ebook.getCategories();
                 if (categories != null && categories.size() > 0) {
                     // 因为类别mapper没用代理接口，所以只能直接使用sqlSession
                     SqlSession sqlSession = WebTool.sqlSession();
@@ -134,5 +137,12 @@ public class EbookServiceImpl implements EbookService {
         }
         log.debug("PublisherTags is empty");
         return false;
+    }
+
+    @Override
+    public PageInfo<Ebook> findAll(int page, int num, EbookVo ebookVo) {
+        PageHelper.startPage(page, num);
+        List<Ebook> ebooks = WebTool.ebookMapper.findAll(ebookVo);
+        return new PageInfo<>(ebooks, 5);
     }
 }

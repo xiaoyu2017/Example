@@ -107,7 +107,7 @@ public class CategoryServiceImpl implements CategoryService {
             sqlSession = WebTool.sqlSession();
             PageHelper.startPage(page, num);
             List<Category> list = sqlSession.selectList("categoryMapper.findAll", categoryVo);
-            return new PageInfo<Category>(list, 5);
+            return new PageInfo<>(list, 5);
         } catch (Exception e) {
             log.debug(String.format("insert category error=[%s]", e.getMessage()));
             if (sqlSession != null) {

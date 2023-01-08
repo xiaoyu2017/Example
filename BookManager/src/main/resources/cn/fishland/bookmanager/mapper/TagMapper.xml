@@ -25,4 +25,44 @@
             (#{tag.status}, #{tag.sort}, #{tag.type}, #{tag.name})
         </foreach>
     </insert>
+
+    <select id="selectPublisherTag" parameterType="int" resultType="Tag">
+        select *
+        from tag
+        where id = #{tid}
+    </select>
+
+    <!--PublisherTag selectPublisherTagByEbookId(@Param("eid") int eid);-->
+    <select id="selectPublisherTagByEbookId" parameterType="int" resultType="PublisherTag">
+        select t.id, t.type, t.name, t.createTime, t.updateTime, t.sort, t.status
+        from ebook_tag et
+                 left join tag t on et.tid = t.id
+        where et.eid = #{eid}
+          and et.type = 1
+        order by updateTime
+                DESC
+    </select>
+
+    <!--AuthorTag selectAuthorTagByEbookId(@Param("eid") int eid);-->
+    <select id="selectAuthorTagByEbookId" parameterType="int" resultType="AuthorTag">
+        select t.id, t.type, t.name, t.createTime, t.updateTime, t.sort, t.status
+        from ebook_tag et
+                 left join tag t on et.tid = t.id
+        where et.eid = #{eid}
+          and et.type = 2
+        order by updateTime
+                DESC
+    </select>
+
+    <!--List<IsbnTag> selectIsbnTagByEbookId(@Param("eid") int eid);-->
+    <select id="selectIsbnTagByEbookId" parameterType="int" resultType="IsbnTag">
+        select t.id, t.type, t.name, t.createTime, t.updateTime, t.sort, t.status
+        from ebook_tag et
+                 left join tag t on et.tid = t.id
+        where et.eid = #{eid}
+          and et.type = 0
+        order by updateTime
+                DESC
+    </select>
+
 </mapper>

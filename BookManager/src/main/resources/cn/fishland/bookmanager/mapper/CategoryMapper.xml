@@ -56,4 +56,11 @@
             #{category.name}
         </foreach>
     </select>
+
+    <select id="selectByEbookId" resultType="Category" parameterType="int">
+        select c.id, c.createTime, c.updateTime, c.sort, c.status, c.name
+        from ebook_category ec
+                 left join category c on ec.cid = c.id
+        where ec.eid = #{eid};
+    </select>
 </mapper>
