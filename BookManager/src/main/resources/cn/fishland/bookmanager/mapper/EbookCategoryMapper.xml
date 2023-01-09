@@ -8,4 +8,13 @@
             (#{ebookCategory.eid}, #{ebookCategory.cid})
         </foreach>
     </insert>
+
+    <!--int deleteAll(int... ids);-->
+    <delete id="deleteAll">
+        delete from ebook_category where eid in (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
 </mapper>

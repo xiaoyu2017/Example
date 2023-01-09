@@ -13,4 +13,5 @@ public interface EbookCategoryMapper {
 
     int insertEbookCategory(@Param("ebookCategories") EbookCategory... ebookCategories);
 
+    int deleteAll(@Param("ids") int... ids);
 }

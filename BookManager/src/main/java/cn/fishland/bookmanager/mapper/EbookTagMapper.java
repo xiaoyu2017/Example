@@ -13,4 +13,5 @@ public interface EbookTagMapper {
 
     int insertEbookTag(@Param("ebookTags") EbookTag... ebookTags);
 
+    int deleteAll(@Param("ids") int... ids);
 }

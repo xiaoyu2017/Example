@@ -8,7 +8,7 @@ import cn.fishland.bookmanager.bean.BaseBean;
  * @author xiaoyu
  * @version 1.0
  */
-public abstract class Attachment extends BaseBean {
+public class Attachment extends BaseBean {
     private static final long serialVersionUID = 4648141158101899732L;
 
     /** 附件类别重新存储名称 */
@@ -101,5 +101,10 @@ public abstract class Attachment extends BaseBean {
 
     public void setParent(Long parent) {
         this.parent = parent;
+    }
+
+    @Override
+    protected String toJson() {
+        return null;
     }
 }

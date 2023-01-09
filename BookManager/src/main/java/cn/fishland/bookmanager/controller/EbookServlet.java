@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 /**
  * 电子书控制台
@@ -47,15 +48,33 @@ public class EbookServlet extends HttpServlet {
             resp.getWriter().print(JSON.toJSONString(new ReturnData("请求链接无法处理")));
             return;
         }
-
         switch (pathArray[0]) {
             case "add":
                 ebookAdd(req, resp);
                 break;
+            case "delete":
+                ReturnData delete = delete(req, resp);
+                resp.getWriter().print(JSON.toJSONString(delete));
+                break;
             default:
                 log.debug("请求链接有问题，请联系管理员！");
         }
+    }
 
+    private ReturnData delete(HttpServletRequest req, HttpServletResponse resp) {
+        EbookService ebookService = new EbookServiceImpl();
+        String eid = req.getParameter("eid");
+        if (WebTool.isBlank(eid)) {
+            log.info(String.format("remove ebook by id not find id uri=[%s] eid=[%s]", req.getRequestURI(), eid));
+            return new ReturnData("405", 1, "未发现参数", "/BookManager/view/ebook");
+        }
+        String[] split = eid.split(",");
+        int[] ints = Stream.of(split).mapToInt(Integer::parseInt).toArray();
+        boolean remove = ebookService.remove(ints);
+        if (remove) {
+            return new ReturnData("OK", "/BookManager/view/ebook");
+        }
+        return new ReturnData("500", 1, "保存到数据库失败，稍后重试！", "/BookManager/view/ebook");
     }
 
     private void ebookAdd(HttpServletRequest req, HttpServletResponse resp) {
@@ -284,7 +303,6 @@ public class EbookServlet extends HttpServlet {
             inputStream.close();
             // 上传成功,清除临时文件
             fileItem.delete();
-
 
         } catch (Exception e) {
             log.error(String.format("upload file error=[%s]", e.getMessage()));

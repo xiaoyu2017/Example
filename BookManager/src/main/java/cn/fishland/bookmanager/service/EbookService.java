@@ -4,8 +4,6 @@ import cn.fishland.bookmanager.bean.pojo.Ebook;
 import cn.fishland.bookmanager.bean.vo.EbookVo;
 import com.github.pagehelper.PageInfo;
 
-import java.util.List;
-
 /**
  * 电子书服务类
  *
@@ -25,4 +23,6 @@ public interface EbookService {
      * @return 符合条件的电子书集合
      */
     PageInfo<Ebook> findAll(int page, int num, EbookVo ebookVo);
+
+    boolean remove(int... ids);
 }

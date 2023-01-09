@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,6 +49,16 @@ public class EbookServiceImpl implements EbookService {
                     return false;
                 }
 
+                // 保存图书
+                int insert = WebTool.ebookMapper.insertAll(ebooks);
+                if (insert != ebooks.length) {
+                    log.error("ebook save error...");
+                    return false;
+                }
+
+                ebook.getFile().setParent(ebook.getId());
+                ebook.getImage().setParent(ebook.getId());
+
                 // 保存文件附件
                 if (!attachmentService.saveFileAttachment(ebook.getFile())) {
                     log.error("ebook save File error...");
@@ -57,13 +68,6 @@ public class EbookServiceImpl implements EbookService {
                 // 保存封面附件
                 if (!attachmentService.saveImageAttachment(ebook.getImage())) {
                     log.error("ebook save Image error...");
-                    return false;
-                }
-
-                // 保存图书
-                int insert = WebTool.ebookMapper.insertAll(ebooks);
-                if (insert != ebooks.length) {
-                    log.error("ebook save error...");
                     return false;
                 }
 
@@ -144,5 +148,40 @@ public class EbookServiceImpl implements EbookService {
         PageHelper.startPage(page, num);
         List<Ebook> ebooks = WebTool.ebookMapper.findAll(ebookVo);
         return new PageInfo<>(ebooks, 5);
+    }
+
+    @Override
+    public boolean remove(int... ids) {
+        // 删除Ebook
+        int deleteAll = WebTool.ebookMapper.deleteAll(ids);
+        if (deleteAll != ids.length) {
+            log.error(String.format("delete ebook error ids={%s}", Arrays.toString(ids)));
+            return false;
+        }
+
+        // 删除EbookTag
+        deleteAll = WebTool.ebookTagMapper.deleteAll(ids);
+        log.info(String.format("delete ebook-tag number={%s} ids={%s}", deleteAll, Arrays.toString(ids)));
+
+        // 删除EbookCategory
+        deleteAll = WebTool.ebookCategoryMapper.deleteAll(ids);
+        log.info(String.format("delete ebook-category number={%s} ids={%s}", deleteAll, Arrays.toString(ids)));
+
+        // 删除Ebook-Attachment
+        List<Attachment> attachments = WebTool.attachmentMapper.findAllByEid(ids);
+        if (attachments != null && attachments.size() > 0) {
+            // 1. 删除物理文件
+            attachments.forEach(a -> {
+                String filePath = a.getFilePath();
+                if (!WebTool.isBlank(filePath)) {
+                    WebTool.deleteFile(filePath);
+                }
+            });
+
+            // 2. 删除数据库文件
+            deleteAll = WebTool.attachmentMapper.deleteAll(ids);
+            log.info(String.format("delete ebook-attachment number={%s} ids={%s}", deleteAll, Arrays.toString(ids)));
+        }
+        return true;
     }
 }

@@ -58,4 +58,13 @@
         <collection property="categories" ofType="Category" column="id" fetchType="lazy"
                     select="categoryMapper.selectByEbookId"/>
     </resultMap>
+
+    <!--int deleteAll(int... ids);-->
+    <delete id="deleteAll">
+        delete from ebook where id in(
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
 </mapper>

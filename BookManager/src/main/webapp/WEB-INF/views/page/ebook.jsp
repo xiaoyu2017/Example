@@ -143,7 +143,7 @@
                                 <div class="btn-group btn-group-sm" role="group"
                                      aria-label="Basic mixed styles example">
                                     <button type="button" class="btn btn-danger"
-                                            onclick="">删除
+                                            onclick="deleteEbook('${ebook.id}')">删除
                                     </button>
                                     <button type="button" class="btn btn-success"
                                             onclick="">修改
@@ -299,11 +299,37 @@
     var editModal = new bootstrap.Modal($('#editModel'));
     var messageModel = new bootstrap.Modal($('#messageModel'));
 
-    // 新增类别
+    // 新增电子书
     function showAddModel() {
         $('#editModelTitle').text('新增图书');
         $('#editModelForm').prop("action", "${pageContext.request.contextPath}/api/ebook/add");
         editModal.show();
+    }
+
+    // 删除电子书
+    function deleteEbook(eid) {
+        $.ajax({
+            url: "${pageContext.request.contextPath}/api/ebook/delete",
+            data: {
+                eid: eid
+            },
+            type: "POST",
+            dataType: "json",
+            success: function (data) {
+                if (data.error === 0) {
+                    $(window).attr('location', data.to);
+                } else {
+                    setMessageModel('删除电子书提示', data.message);
+                    messageModel.show();
+                    location.reload();
+                }
+            }
+        });
+    }
+
+    function setMessageModel(title, message) {
+        $('#messageModelTitle').text(title);
+        $('#messageModelBody').text(message);
     }
 
     $(function () {

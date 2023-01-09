@@ -318,4 +318,14 @@ public class WebTool {
         System.out.println(list);
     }
 
+    public static void deleteFile(String filePath) {
+        try {
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

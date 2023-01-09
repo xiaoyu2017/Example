@@ -39,4 +39,22 @@
         where parent = #{eid}
           and type = 1;
     </select>
+
+    <!--int deleteAll(int... ids)-->
+    <delete id="deleteAll">
+        delete from attachment where parent in (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <!--List<Attachment> findAllByEid(int... ids);-->
+    <select id="findAllByEid" resultType="Attachment">
+        select * from attachment where parent in(
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </select>
 </mapper>
