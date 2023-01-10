@@ -3,7 +3,7 @@ package cn.fishland.bookmanager.bean.vo;
 import cn.fishland.bookmanager.bean.BaseBean;
 
 /**
- * TODO
+ * 电子书查询类
  *
  * @author xiaoyu
  * @version 1.0

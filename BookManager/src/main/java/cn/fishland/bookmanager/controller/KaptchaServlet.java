@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * TODO
+ * 验证码
  *
  * @author xiaoyu
  * @version 1.0

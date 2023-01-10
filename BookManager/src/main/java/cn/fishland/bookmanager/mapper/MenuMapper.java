@@ -5,7 +5,7 @@ import cn.fishland.bookmanager.bean.pojo.Menu;
 import java.util.List;
 
 /**
- * TODO
+ * 菜单Mapper
  *
  * @author xiaoyu
  * @version 1.0

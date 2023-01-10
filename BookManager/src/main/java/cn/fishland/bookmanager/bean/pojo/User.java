@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * TODO
+ * 用户类
  *
  * @author xiaoyu
  * @version 1.0
