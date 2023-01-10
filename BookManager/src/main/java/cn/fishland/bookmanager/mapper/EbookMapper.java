@@ -19,4 +19,6 @@ public interface EbookMapper {
     List<Ebook> findAll(EbookVo ebookVo);
 
     int deleteAll(@Param("ids") int... ids);
+
+    Ebook selectById(@Param("id") int id);
 }

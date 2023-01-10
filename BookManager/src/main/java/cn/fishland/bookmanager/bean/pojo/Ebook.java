@@ -25,7 +25,7 @@ public class Ebook extends BaseBean {
     /** 页数 */
     private String pages;
     /** 是否带书签 */
-    private Boolean bookmark;
+    private Boolean bookmark = false;
     /** 简介 */
     private String summary;
 
@@ -43,7 +43,6 @@ public class Ebook extends BaseBean {
 
     /** 类别 */
     private List<Category> categories;
-
 
     public String getBookName() {
         return bookName;
@@ -148,7 +147,6 @@ public class Ebook extends BaseBean {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
-
 
     @Override
     public String toString() {

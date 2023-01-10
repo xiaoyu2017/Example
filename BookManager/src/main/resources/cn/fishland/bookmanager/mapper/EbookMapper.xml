@@ -49,9 +49,9 @@
                      select="cn.fishland.bookmanager.mapper.TagMapper.selectPublisherTagByEbookId"/>
         <association property="author" column="id" fetchType="lazy"
                      select="cn.fishland.bookmanager.mapper.TagMapper.selectAuthorTagByEbookId"/>
-        <association property="image" column="id" fetchType="lazy"
-                     select="cn.fishland.bookmanager.mapper.AttachmentMapper.findFileAttachmentByEbookId"/>
         <association property="file" column="id" fetchType="lazy"
+                     select="cn.fishland.bookmanager.mapper.AttachmentMapper.findFileAttachmentByEbookId"/>
+        <association property="image" column="id" fetchType="lazy"
                      select="cn.fishland.bookmanager.mapper.AttachmentMapper.findImageAttachmentByEbookId"/>
         <collection property="isbn" ofType="IsbnTag" column="id" fetchType="lazy"
                     select="cn.fishland.bookmanager.mapper.TagMapper.selectIsbnTagByEbookId"/>
@@ -67,4 +67,11 @@
         </foreach>
         )
     </delete>
+
+    <!--Ebook selectById(@Param("id") int id);-->
+    <select id="selectById" resultMap="ebookResult">
+        select *
+        from ebook
+        where id = #{id};
+    </select>
 </mapper>

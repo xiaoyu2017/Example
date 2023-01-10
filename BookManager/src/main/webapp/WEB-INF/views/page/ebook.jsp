@@ -146,7 +146,7 @@
                                             onclick="deleteEbook('${ebook.id}')">删除
                                     </button>
                                     <button type="button" class="btn btn-success"
-                                            onclick="">修改
+                                            onclick="updateEbook('${ebook.id}')">修改
                                     </button>
                                 </div>
                             </td>
@@ -196,6 +196,9 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <form id="editModelForm" method="post" enctype="multipart/form-data">
+                <input type="text" id="eid" name="eid" hidden>
+                <input type="text" id="fid" name="fid" hidden>
+                <input type="text" id="iid" name="iid" hidden>
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModelTitle"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -264,18 +267,18 @@
                     </div>
 
                     <div class="tagsinput-primary form-group" style="margin-top: 10px;">
-                        <label for="category">类别</label>
-                        <input id="category" name="category" class="tagsinput" data-role="tagsinput"
+                        <label for="categories">类别</label>
+                        <input id="categories" name="categories" class="tagsinput" data-role="tagsinput"
                                placeholder="输入后回车">
                     </div>
 
                     <div class="form-group" style="margin: 10px 0;">
-                        <label for="file">电子书文件</label>
+                        <label id="fileText" for="file">电子书文件</label>
                         <input type="file" id="file" name="file" class="form-control-file">
                     </div>
 
                     <div class="form-group" style="margin: 10px 0;">
-                        <label for="image">电子书封面</label>
+                        <label id="imageText" for="image">电子书封面</label>
                         <input type="file" class="form-control-file" id="image" name="image">
                     </div>
 
@@ -326,6 +329,56 @@
             }
         });
     }
+
+    // 删除电子书
+    function updateEbook(eid) {
+        // 获得电子书信息
+        $.ajax({
+            url: "${pageContext.request.contextPath}/api/ebook/get/" + eid,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data.error === 0) {
+                    // 赋值表单
+                    var ebook = data.data;
+                    // 书名
+                    $('#eid').val(ebook.id);
+                    $('#fid').val(ebook.file.id);
+                    $('#iid').val(ebook.image.id);
+                    $('#bookName').val(ebook.bookName);
+                    $('#edition').val(ebook.edition);
+                    $('#year').val(ebook.year);
+                    $('#language').val(ebook.language);
+                    $('#pages').val(ebook.pages);
+                    $('#bookmark').val(ebook.bookmark);
+                    $('#summary').val(ebook.summary);
+                    $('#publisher').tagsinput('add',ebook.publisher.name);
+                    $('#author').tagsinput('add',ebook.author.name);
+                    var isbnStr;
+                    $.each(ebook.isbn, function (index, item) {
+                        isbnStr += item.name + ",";
+                    })
+                    $('#isbn').tagsinput('add',isbnStr);
+
+                    var categoryStr;
+                    $.each(ebook.categories, function (index, item) {
+                        categoryStr += item.name + ",";
+                    })
+                    $('#categories').tagsinput('add',categoryStr);
+
+                    $('#editModelTitle').text('修改电子书');
+                    $('#editModelForm').prop("action", "${pageContext.request.contextPath}/api/ebook/update");
+                    editModal.show();
+                } else {
+                    setMessageModel('修改电子书提示', data.message);
+                    messageModel.show();
+                    location.reload();
+                }
+            }
+        });
+    }
+
+
 
     function setMessageModel(title, message) {
         $('#messageModelTitle').text(title);

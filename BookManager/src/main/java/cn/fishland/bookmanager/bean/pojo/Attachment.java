@@ -104,6 +104,26 @@ public class Attachment extends BaseBean {
     }
 
     @Override
+    public String toString() {
+        return "Attachment{" +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", sort=" + sort +
+                ", aid='" + aid + '\'' +
+                ", type=" + type +
+                ", name='" + name + '\'' +
+                ", size=" + size +
+                ", sizeUnit='" + sizeUnit + '\'' +
+                ", extension='" + extension + '\'' +
+                ", dynamicId='" + dynamicId + '\'' +
+                ", filePath='" + filePath + '\'' +
+                ", parent=" + parent +
+                "} " + super.toString();
+    }
+
+    @Override
     protected String toJson() {
         return null;
     }

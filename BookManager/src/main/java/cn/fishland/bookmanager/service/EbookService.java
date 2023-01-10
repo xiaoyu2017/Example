@@ -25,4 +25,6 @@ public interface EbookService {
     PageInfo<Ebook> findAll(int page, int num, EbookVo ebookVo);
 
     boolean remove(int... ids);
+
+    Ebook getById(int id);
 }

@@ -37,7 +37,38 @@ public class EbookServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String[] pathArray = WebTool.handlerMapping(req.getRequestURI(), "ebook");
+        if (pathArray == null) {
+            log.debug("无法获得类别数据操作请求uir");
+            resp.getWriter().print(JSON.toJSONString(new ReturnData("请求链接无法处理")));
+            return;
+        }
+        switch (pathArray[0]) {
+            case "get":
+                getById(req, resp, pathArray[1]);
+                break;
+            default:
+                log.debug("请求链接有问题，请联系管理员！");
+        }
+    }
 
+    private void getById(HttpServletRequest req, HttpServletResponse resp, String id) {
+        if (WebTool.isBlank(id)) {
+            log.error(String.format("get ebook by id error id={%s}", id));
+            return;
+        }
+        int eid = Integer.parseInt(id);
+        EbookService ebookService = new EbookServiceImpl();
+        Ebook ebook = ebookService.getById(eid);
+        if (ebook == null) {
+            log.error(String.format("select ebook by id from ebook error id={%s}", id));
+            return;
+        }
+        try {
+            resp.getWriter().print(JSON.toJSONString(new ReturnData("OK",ebook,"/EbookManager/view/ebook")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -55,6 +86,11 @@ public class EbookServlet extends HttpServlet {
             case "delete":
                 ReturnData delete = delete(req, resp);
                 resp.getWriter().print(JSON.toJSONString(delete));
+                break;
+            case "update":
+                // FIXME 偷懒的修改，先删除后修改
+                delete(req, resp);
+                ebookAdd(req, resp);
                 break;
             default:
                 log.debug("请求链接有问题，请联系管理员！");
@@ -92,8 +128,20 @@ public class EbookServlet extends HttpServlet {
 
         // 接收对象
         Ebook ebook = new Ebook();
+
         // 处理上传结果
         uploadParseRequest(servletFileUpload, req, ebook);
+
+        // 判断是否有附加id--主要针对修改
+        if (ebook.getFile()==null) {
+            String fid = req.getParameter("fid");
+            if (!WebTool.isBlank(fid)) {
+                // TODO 查询附件
+            }
+        }
+        // TODO 查询附件
+        String iid = req.getParameter("iid");
+
 
         // 保存数据库
         EbookService ebookService = new EbookServiceImpl();
@@ -109,7 +157,6 @@ public class EbookServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
 
     public DiskFileItemFactory getDiskFileItemFactory(File file) {
         DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -207,7 +254,7 @@ public class EbookServlet extends HttpServlet {
                         ebook.setIsbn(list);
                     }
                     break;
-                case "category":
+                case "categories":
                     String[] categoryArray = value.split(",");
                     if (categoryArray.length > 0) {
                         List<Category> list = new ArrayList<>();

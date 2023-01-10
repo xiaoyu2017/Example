@@ -184,4 +184,10 @@ public class EbookServiceImpl implements EbookService {
         }
         return true;
     }
+
+    @Override
+    public Ebook getById(int id) {
+        return WebTool.ebookMapper.selectById(id);
+    }
+
 }

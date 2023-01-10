@@ -78,14 +78,17 @@
         <url-pattern>/api/user/*</url-pattern>
     </servlet-mapping>
 
-    <!--<filter>
+    <filter>
         <filter-name>authorFilter</filter-name>
         <filter-class>cn.fishland.bookmanager.filter.AuthorFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>authorFilter</filter-name>
         <servlet-name>categoryServlet</servlet-name>
+        <servlet-name>ebookServlet</servlet-name>
         <servlet-name>homeServlet</servlet-name>
         <servlet-name>views</servlet-name>
-    </filter-mapping>-->
+        <servlet-name>userServlet</servlet-name>
+        <servlet-name>KaptchaServlet</servlet-name>
+    </filter-mapping>
 </web-app>
