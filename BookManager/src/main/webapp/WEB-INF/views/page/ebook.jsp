@@ -340,11 +340,20 @@
             success: function (data) {
                 if (data.error === 0) {
                     // 赋值表单
-                    var ebook = data.data;
+                    const ebook = data.data;
+                    if (ebook == null) {
+                        return;
+                    }
+                    const fileAtt = ebook.file;
+                    const imageAtt = ebook.image;
                     // 书名
                     $('#eid').val(ebook.id);
-                    $('#fid').val(ebook.file.id);
-                    $('#iid').val(ebook.image.id);
+                    if (fileAtt != null) {
+                        $('#fid').val(ebook.file.id);
+                    }
+                    if (imageAtt != null) {
+                        $('#iid').val(ebook.image.id);
+                    }
                     $('#bookName').val(ebook.bookName);
                     $('#edition').val(ebook.edition);
                     $('#year').val(ebook.year);
@@ -352,19 +361,19 @@
                     $('#pages').val(ebook.pages);
                     $('#bookmark').val(ebook.bookmark);
                     $('#summary').val(ebook.summary);
-                    $('#publisher').tagsinput('add',ebook.publisher.name);
-                    $('#author').tagsinput('add',ebook.author.name);
-                    var isbnStr;
+                    $('#publisher').tagsinput('add', ebook.publisher.name);
+                    $('#author').tagsinput('add', ebook.author.name);
+                    var isbnStr = '';
                     $.each(ebook.isbn, function (index, item) {
                         isbnStr += item.name + ",";
                     })
-                    $('#isbn').tagsinput('add',isbnStr);
+                    $('#isbn').tagsinput('add', isbnStr);
 
-                    var categoryStr;
+                    var categoryStr = '';
                     $.each(ebook.categories, function (index, item) {
                         categoryStr += item.name + ",";
                     })
-                    $('#categories').tagsinput('add',categoryStr);
+                    $('#categories').tagsinput('add', categoryStr);
 
                     $('#editModelTitle').text('修改电子书');
                     $('#editModelForm').prop("action", "${pageContext.request.contextPath}/api/ebook/update");
@@ -377,7 +386,6 @@
             }
         });
     }
-
 
 
     function setMessageModel(title, message) {

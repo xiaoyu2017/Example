@@ -65,7 +65,7 @@ public class EbookServlet extends HttpServlet {
             return;
         }
         try {
-            resp.getWriter().print(JSON.toJSONString(new ReturnData("OK",ebook,"/EbookManager/view/ebook")));
+            resp.getWriter().print(JSON.toJSONString(new ReturnData("OK", ebook, "/EbookManager/view/ebook")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,20 +89,26 @@ public class EbookServlet extends HttpServlet {
                 break;
             case "update":
                 // FIXME 偷懒的修改，先删除后修改
-                delete(req, resp);
                 ebookAdd(req, resp);
+                delete(req, resp);
                 break;
             default:
                 log.debug("请求链接有问题，请联系管理员！");
         }
     }
 
+    private String deleteId = null;
+
     private ReturnData delete(HttpServletRequest req, HttpServletResponse resp) {
         EbookService ebookService = new EbookServiceImpl();
         String eid = req.getParameter("eid");
         if (WebTool.isBlank(eid)) {
-            log.info(String.format("remove ebook by id not find id uri=[%s] eid=[%s]", req.getRequestURI(), eid));
-            return new ReturnData("405", 1, "未发现参数", "/BookManager/view/ebook");
+            if (deleteId != null) {
+                eid = deleteId;
+            } else {
+                log.info(String.format("remove ebook by id not find id uri=[%s] eid=[%s]", req.getRequestURI(), eid));
+                return new ReturnData("405", 1, "未发现参数", "/BookManager/view/ebook");
+            }
         }
         String[] split = eid.split(",");
         int[] ints = Stream.of(split).mapToInt(Integer::parseInt).toArray();
@@ -131,17 +137,6 @@ public class EbookServlet extends HttpServlet {
 
         // 处理上传结果
         uploadParseRequest(servletFileUpload, req, ebook);
-
-        // 判断是否有附加id--主要针对修改
-        if (ebook.getFile()==null) {
-            String fid = req.getParameter("fid");
-            if (!WebTool.isBlank(fid)) {
-                // TODO 查询附件
-            }
-        }
-        // TODO 查询附件
-        String iid = req.getParameter("iid");
-
 
         // 保存数据库
         EbookService ebookService = new EbookServiceImpl();
@@ -219,6 +214,9 @@ public class EbookServlet extends HttpServlet {
             switch (fileItem.getFieldName()) {
                 case "bookName":
                     ebook.setBookName(value);
+                    break;
+                case "eid":
+                    deleteId = value;
                     break;
                 case "edition":
                     ebook.setEdition(value);

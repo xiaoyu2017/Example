@@ -56,19 +56,26 @@ public class EbookServiceImpl implements EbookService {
                     return false;
                 }
 
-                ebook.getFile().setParent(ebook.getId());
-                ebook.getImage().setParent(ebook.getId());
-
                 // 保存文件附件
-                if (!attachmentService.saveFileAttachment(ebook.getFile())) {
+                FileAttachment file = ebook.getFile();
+                if (file == null) {
+                    log.error("save ebook file attachment empty");
+                    return false;
+                }
+                ebook.getFile().setParent(ebook.getId());
+                if (!attachmentService.saveFileAttachment(file)) {
                     log.error("ebook save File error...");
                     return false;
                 }
 
                 // 保存封面附件
-                if (!attachmentService.saveImageAttachment(ebook.getImage())) {
-                    log.error("ebook save Image error...");
-                    return false;
+                ImageAttachment image = ebook.getImage();
+                if (image != null) {
+                    ebook.getImage().setParent(ebook.getId());
+                    if (!attachmentService.saveImageAttachment(image)) {
+                        log.error("ebook save Image error...");
+                        return false;
+                    }
                 }
 
                 // 出版社中间表

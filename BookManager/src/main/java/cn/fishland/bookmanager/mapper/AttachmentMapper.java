@@ -26,4 +26,5 @@ public interface AttachmentMapper {
     int deleteAll(@Param("ids") int... ids);
 
     List<Attachment> findAllByEid(@Param("ids") int... ids);
+
 }
