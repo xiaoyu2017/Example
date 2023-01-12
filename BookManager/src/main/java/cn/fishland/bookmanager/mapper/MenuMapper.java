@@ -1,8 +1,10 @@
 package cn.fishland.bookmanager.mapper;
 
 import cn.fishland.bookmanager.bean.pojo.Menu;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * 菜单Mapper
@@ -12,14 +14,17 @@ import java.util.List;
  */
 public interface MenuMapper {
 
-    void insert(Menu menu);
+    @Insert("insert into menu(`name`, `icon`, `link`, `parent`, `sort`, `status`) " +
+            "value (#{name}, #{icon}, #{link}, #{parent}, #{sort}, #{status});")
+    int insert(Menu menu);
 
-    void delete(Menu menu);
+    @Insert("delete from menu where id = #{id}")
+    int delete(@Param("id") long id);
 
-    void update(Menu menu);
+    @Update("update menu set name = #{name}, icon = #{icon}, link = #{link}, sort = #{sort} where id = #{id}")
+    int update(Menu menu);
 
-    List<Menu> selectAll();
-
-
+    @Select("select * from menu where id = #{id}")
+    Menu select(@Param("id") long id);
 
 }

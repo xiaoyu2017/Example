@@ -109,6 +109,21 @@ create table if not exists user
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
+create table menu
+(
+    `id`         int AUTO_INCREMENT,
+    `createTime` timestamp          NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updateTime` timestamp          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `sort`       int(1)             NOT NULL DEFAULT 0,
+    `status`     tinyint(1)         NOT NULL DEFAULT 1,
+    `name`       varchar(20) UNIQUE NOT NULL,
+    `link`       varchar(100)       NOT NULL,
+    `icon`       varchar(100),
+    `parent`     int,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
 /*慎用*/
 delete from attachment where 1=1;
 delete from category where 1=1;
