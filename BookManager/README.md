@@ -8,15 +8,44 @@
 ![](https://img.shields.io/badge/mybatis-3.5.11-blue)
 ![](https://img.shields.io/badge/mysql-8.0.27-blue)
 
-
 # Mybatis
 
-## 1. 类别相关操作
+> 相关示例
 
-> 直接使用mapper操作数据库，不通过mapper接口来实现。
+## 1. 直接使用Mapper配置文件
 
 1. mapper配置文件
-[CategoryMapper.xml](/src/main/resources/cn/fishland/bookmanager/mapper/CategoryMapper.xml)
+
+   [CategoryMapper.xml](/src/main/resources/cn/fishland/bookmanager/mapper/CategoryMapper.xml)
 
 2. 核心配置文件添加。
-3. CategoryService调用
+
+   [mybatis.xml](/src/main/resources/mybatis.xml)
+
+3. 调用
+
+   [CategoryService.java](/src/main/java/cn/fishland/bookmanager/service/CategoryService.java)
+
+## 2. 代理接口使用
+
+1. mapper配置文件
+
+   [CategoryMapper.xml](/src/main/resources/cn/fishland/bookmanager/mapper/CategoryMapper.xml)
+
+2. 核心配置文件添加。
+
+   [EbookMapper.java](/src/main/java/cn/fishland/bookmanager/mapper/EbookMapper.java)
+   [EbookMapper.xml](/src/main/resources/cn/fishland/bookmanager/mapper/EbookMapper.xml)
+
+3. 调用
+
+   [EbookService.java](/src/main/java/cn/fishland/bookmanager/service/EbookService.java)
+
+## 3. 注解使用
+1. 核心配置文件添加。
+
+   [CategoryMapper.xml](/src/main/resources/cn/fishland/bookmanager/mapper/CategoryMapper.xml)
+
+2. 创建接口
+
+   [MenuMapper.java](/src/main/java/cn/fishland/bookmanager/mapper/MenuMapper.java)
