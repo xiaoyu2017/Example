@@ -18,8 +18,9 @@ public class Menu extends BaseBean {
     private String name;
     private String icon;
     private String link;
-    private Long parent;
-    private List<Menu> childs;
+    private String parent;
+    private List<Menu> children;
+    private Menu parentMenu;
 
     public Menu() {
     }
@@ -28,13 +29,6 @@ public class Menu extends BaseBean {
         this.name = name;
         this.icon = icon;
         this.link = link;
-    }
-
-    public Menu(String name, String icon, String link, Long parent) {
-        this.name = name;
-        this.icon = icon;
-        this.link = link;
-        this.parent = parent;
     }
 
     public String getName() {
@@ -61,20 +55,28 @@ public class Menu extends BaseBean {
         this.link = link;
     }
 
-    public Long getParent() {
+    public String getParent() {
         return parent;
     }
 
-    public void setParent(Long parent) {
+    public void setParent(String parent) {
         this.parent = parent;
     }
 
-    public List<Menu> getChilds() {
-        return childs;
+    public List<Menu> getChildren() {
+        return children;
     }
 
-    public void setChilds(List<Menu> childs) {
-        this.childs = childs;
+    public void setChildren(List<Menu> children) {
+        this.children = children;
+    }
+
+    public Menu getParentMenu() {
+        return parentMenu;
+    }
+
+    public void setParentMenu(Menu parentMenu) {
+        this.parentMenu = parentMenu;
     }
 
     @Override
@@ -83,22 +85,28 @@ public class Menu extends BaseBean {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Menu menu = (Menu) o;
-        return Objects.equals(name, menu.name) && Objects.equals(icon, menu.icon) && Objects.equals(link, menu.link) && Objects.equals(parent, menu.parent);
+        return Objects.equals(name, menu.name) && Objects.equals(icon, menu.icon) && Objects.equals(link, menu.link);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), name, icon, link, parent);
+        return Objects.hash(super.hashCode(), name, icon, link);
     }
 
     @Override
     public String toString() {
         return "Menu{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", sort=" + sort +
+                ", name='" + name + '\'' +
                 ", icon='" + icon + '\'' +
                 ", link='" + link + '\'' +
-                ", parent=" + parent +
-                ", childs=" + childs +
+                ", parent='" + parent + '\'' +
+                ", childs=" + children +
+                ", parentMenu=" + parentMenu +
                 "} " + super.toString();
     }
 
