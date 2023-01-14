@@ -1,9 +1,13 @@
 package cn.fishland.bookportal.service.impl;
 
 import cn.fishland.bookportal.bean.pojo.Ebook;
+import cn.fishland.bookportal.bean.vo.EbookVo;
+import cn.fishland.bookportal.dao.EbookDao;
 import cn.fishland.bookportal.service.EbookService;
+import cn.fishland.bookportal.tool.PortalTool;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 电子书服务类查询类
@@ -14,7 +18,15 @@ import java.util.List;
 public class EbookServiceImpl implements EbookService {
 
     @Override
-    public List<Ebook> searchAll(String search) {
-        return null;
+    public List<EbookVo> searchAll(String search) {
+        if (search == null || search.trim().length() <= 0) {
+            System.out.println("search str is empty");
+            return null;
+        }
+
+        EbookDao ebookDao = new EbookDao();
+        Map<Long, Ebook> ebookMap = ebookDao.selectAll(search);
+
+        return PortalTool.ebook2EbookVo(ebookMap);
     }
 }

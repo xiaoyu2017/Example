@@ -32,6 +32,10 @@ public class Tag extends BaseBean {
         return type;
     }
 
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     protected String toJson() {
         return null;

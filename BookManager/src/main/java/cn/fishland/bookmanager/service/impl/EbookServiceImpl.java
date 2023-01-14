@@ -28,10 +28,10 @@ public class EbookServiceImpl implements EbookService {
     public boolean save(Ebook... ebooks) {
         if (ebooks.length > 0) {
             for (Ebook ebook : ebooks) {
-                // 保存出版社
-                TagService tagService = new TagServiceImpl();
                 AttachmentService attachmentService = new AttachmentServiceImpl();
+                TagService tagService = new TagServiceImpl();
 
+                // 保存出版社
                 if (!tagService.savePublisherTag(ebook.getPublisher())) {
                     log.error("ebook save Publisher error...");
                     return false;

@@ -1,6 +1,6 @@
 package cn.fishland.bookportal.service;
 
-import cn.fishland.bookportal.bean.pojo.Ebook;
+import cn.fishland.bookportal.bean.vo.EbookVo;
 
 import java.util.List;
 
@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface EbookService {
 
-    List<Ebook> searchAll(String search);
+    List<EbookVo> searchAll(String search);
 
 }

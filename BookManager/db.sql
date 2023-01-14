@@ -11,11 +11,11 @@ create table attachment
     `status`     tinyint(1)         NOT NULL DEFAULT 1,
     `aid`        varchar(50) UNIQUE NOT NULL,
     `type`       tinyint(1)         NOT NULL,
-    `name`       varchar(50)        NOT NULL,
+    `name`       varchar(500)        NOT NULL,
     `size`       double             NOT NULL,
     `sizeUnit`   varchar(5)         NOT NULL,
     `extension`  varchar(5)         NOT NULL,
-    `filePath`   varchar(100)       NOT NULL,
+    `filePath`   varchar(200)       NOT NULL,
     `dynamicId`  varchar(50),
     `parent`     int,
     PRIMARY KEY (`id`)

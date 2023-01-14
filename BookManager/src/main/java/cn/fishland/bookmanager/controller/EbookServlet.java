@@ -291,8 +291,8 @@ public class EbookServlet extends HttpServlet {
             String sizeUnit = "B";
             String unitChange = WebTool.unitChange((double) size);
             if (!WebTool.isBlank(unitChange)) {
-                String[] split = unitChange.split("|");
-                size = Long.parseLong(split[0]);
+                String[] split = unitChange.split("\\|");
+                size = (long) Double.parseDouble(split[0]);
                 sizeUnit = String.valueOf(split[1]);
             }
 
@@ -350,7 +350,7 @@ public class EbookServlet extends HttpServlet {
             fileItem.delete();
 
         } catch (Exception e) {
-            log.error(String.format("upload file error=[%s]", e.getMessage()));
+            log.error(String.format("parse file field error={%s}", e.getMessage()));
         }
     }
 }

@@ -4,6 +4,7 @@ import cn.fishland.bookportal.bean.BaseBean;
 import com.alibaba.fastjson2.JSON;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 电子图书类
@@ -12,6 +13,7 @@ import java.util.List;
  * @version 1.0
  */
 public class Ebook extends BaseBean {
+    private static final long serialVersionUID = -3497357472846956625L;
 
     /** 书名 */
     private String bookName;
@@ -39,6 +41,7 @@ public class Ebook extends BaseBean {
     private ImageAttachment image;
     /** 文件 */
     private FileAttachment file;
+
 
     /** 类别 */
     private List<Category> categories;
@@ -169,6 +172,23 @@ public class Ebook extends BaseBean {
                 ", file=" + file +
                 ", categories=" + categories +
                 "} " + super.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Ebook ebook = (Ebook) o;
+        return Objects.equals(id, ebook.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override

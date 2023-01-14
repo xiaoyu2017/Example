@@ -297,27 +297,6 @@ public class WebTool {
         }
     }
 
-    public static void main(String[] args) {
-        SqlSession sqlSession = WebTool.sqlSession();
-        Category[] categories = new Category[3];
-        Category category = new Category();
-        category.setName("科幻1");
-        categories[0] = category;
-
-        Category category1 = new Category();
-        category1.setName("科幻3");
-        categories[1] = category1;
-
-        Category category2 = new Category();
-        category2.setName("科幻33232424");
-        categories[2] = category2;
-
-
-        List<Category> list = sqlSession.selectList("categoryMapper.selectByName", categories);
-
-        System.out.println(list);
-    }
-
     public static void deleteFile(String filePath) {
         try {
             File file = new File(filePath);
