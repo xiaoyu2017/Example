@@ -1,6 +1,7 @@
 package cn.fishland.bookportal.dao;
 
 import cn.fishland.bookportal.bean.pojo.*;
+import cn.fishland.bookportal.bean.vo.EbookVo;
 import cn.fishland.bookportal.tool.PortalTool;
 
 import java.sql.Connection;
@@ -226,5 +227,108 @@ public class EbookDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public EbookVo selectById(long eid) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = PortalTool.connection();
+            if (connection == null) {
+                System.out.println("get mysql connection is empty");
+                return null;
+            }
+
+            String select = "select * from ebook where id = ?";
+            statement = connection.prepareStatement(select);
+            statement.setLong(1, eid);
+            ResultSet resultSet = statement.executeQuery();
+
+            EbookVo ebookVo = new EbookVo();
+
+            if (resultSet.next()) {
+                ebookVo.setBookName(resultSet.getString("book_name"));
+                ebookVo.setYear(resultSet.getString("year"));
+                ebookVo.setLanguage(resultSet.getString("language"));
+                ebookVo.setId(resultSet.getLong("id"));
+            }
+
+            String selectTag = "select t.id, t.name, t.type, t.status, t.sort, t.updateTime, t.createTime from ebook_tag et left join tag t on et.tid = t.id where et.eid = ?";
+            statement = connection.prepareStatement(selectTag);
+            statement.setLong(1, ebookVo.getId());
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int type = resultSet.getInt("type");
+                switch (type) {
+                    case 0:
+                        break;
+                    case 1:
+                        ebookVo.setPublisher(resultSet.getString("name"));
+                        break;
+                    case 2:
+                        ebookVo.setAuthor(resultSet.getString("name"));
+                        break;
+                    default:
+                        System.out.println("can not parse tag");
+                }
+            }
+
+            String selectAttachment = "select * from attachment where parent = ?";
+            statement = connection.prepareStatement(selectAttachment);
+            statement.setLong(1, ebookVo.getId());
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int type = resultSet.getInt("type");
+                switch (type) {
+                    case 0:
+                        ebookVo.setSize(resultSet.getDouble("size") + "");
+                        ebookVo.setSizeUnit(resultSet.getString("sizeUnit"));
+                        ebookVo.setExtension(resultSet.getString("extension"));
+                        break;
+                    case 1:
+                        ebookVo.setImageId(resultSet.getLong("id"));
+                        break;
+                    default:
+                }
+            }
+
+            return ebookVo;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            PortalTool.close(connection, statement);
+        }
+    }
+
+    private void setTag(ResultSet resultSet, Tag tag) throws SQLException {
+        tag.setId(resultSet.getLong("id"));
+        tag.setName(resultSet.getString("name"));
+        tag.setType(resultSet.getInt("type"));
+    }
+
+    public ImageAttachment selectAttachmentById(String imgId) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = PortalTool.connection();
+            String select = "select * from attachment where id = ?";
+            statement = connection.prepareStatement(select);
+            statement.setInt(1, Integer.parseInt(imgId));
+            ResultSet resultSet = statement.executeQuery();
+            ImageAttachment imageAttachment = null;
+            if (resultSet.next()) {
+                imageAttachment = new ImageAttachment();
+                imageAttachment.setFilePath(resultSet.getString("filePath"));
+                imageAttachment.setExtension(resultSet.getString("extension"));
+            }
+            return imageAttachment;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            PortalTool.close(connection, statement);
+        }
+        return null;
     }
 }

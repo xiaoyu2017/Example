@@ -1,5 +1,6 @@
 package cn.fishland.bookportal.service;
 
+import cn.fishland.bookportal.bean.pojo.ImageAttachment;
 import cn.fishland.bookportal.bean.vo.EbookVo;
 
 import java.util.List;
@@ -13,5 +14,9 @@ import java.util.List;
 public interface EbookService {
 
     List<EbookVo> searchAll(String search);
+
+    EbookVo findById(long eid);
+
+    ImageAttachment findAttachmentById(String imgId);
 
 }

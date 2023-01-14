@@ -21,6 +21,7 @@ public class EbookVo extends BaseBean {
     private String size;
     private String sizeUnit;
     private String extension;
+    private Long imageId;
     private String info;
 
     public String getBookName() {
@@ -93,6 +94,14 @@ public class EbookVo extends BaseBean {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public Long getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Long imageId) {
+        this.imageId = imageId;
     }
 
     @Override

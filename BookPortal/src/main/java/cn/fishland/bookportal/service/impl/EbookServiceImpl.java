@@ -1,6 +1,7 @@
 package cn.fishland.bookportal.service.impl;
 
 import cn.fishland.bookportal.bean.pojo.Ebook;
+import cn.fishland.bookportal.bean.pojo.ImageAttachment;
 import cn.fishland.bookportal.bean.vo.EbookVo;
 import cn.fishland.bookportal.dao.EbookDao;
 import cn.fishland.bookportal.service.EbookService;
@@ -28,5 +29,17 @@ public class EbookServiceImpl implements EbookService {
         Map<Long, Ebook> ebookMap = ebookDao.selectAll(search);
 
         return PortalTool.ebook2EbookVo(ebookMap);
+    }
+
+    @Override
+    public EbookVo findById(long eid) {
+        EbookDao ebookDao = new EbookDao();
+        return ebookDao.selectById(eid);
+    }
+
+    @Override
+    public ImageAttachment findAttachmentById(String imgId) {
+        EbookDao ebookDao = new EbookDao();
+        return ebookDao.selectAttachmentById(imgId);
     }
 }
